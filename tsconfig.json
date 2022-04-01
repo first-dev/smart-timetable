@@ -1,6 +1,33 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "target": "ES5",
+    "strict": true,
+    "jsx": "react-native",
+    "paths": {
+      "@assets/*": ["./assets/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@components/*": ["./src/components/*"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@constants/*": ["./constants/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@store/*": ["./src/store/*"],
+      "@reducers/*": ["./src/reducers/*"],
+      "@models/*": ["./src/models/*"],
+      "@atoms/*": ["./src/atoms/*"],
+
+      "@assets": ["./assets"],
+      "@utils": ["./src/utils"],
+      "@components": ["./src/components"],
+      "@navigation": ["./src/navigation"],
+      "@screens": ["./src/screens"],
+      "@constants": ["./constants"],
+      "@hooks": ["./src/hooks"],
+      "@store": ["./src/store"],
+      "@reducers": ["./src/reducers"],
+      "@models": ["./src/models"],
+      "@atoms": ["./src/atoms"]
+    }
   }
 }

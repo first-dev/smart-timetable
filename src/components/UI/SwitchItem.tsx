@@ -1,43 +1,9 @@
-import * as React from 'react'
-import { FC, useState } from 'react'
-import {
-  View,
-  StyleSheet,
-  Switch as NativeSwitch,
-  StyleProp,
-  ViewStyle,
-} from 'react-native'
-import { Paragraph, Switch, TouchableRipple, Text } from 'react-native-paper'
+import { ComponentProps, FC, useState } from 'react'
+import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import { Switch, TouchableRipple, Text } from 'react-native-paper'
 
-type SwitchItemProps = NativeSwitch['props'] & {
-  /**
-   * Disable toggling the switch.
-   */
-  disabled?: boolean
-  /**
-   * Value of the switch, true means 'on', false means 'off'.
-   */
-  value?: boolean
-  /**
-   * Custom color for switch.
-   */
-  color?: string
-  /**
-   * Callback called with the new value when it changes.
-   */
-  onValueChange?: Function
-  style?: StyleProp<ViewStyle>
-  /**
-   * @optional
-   */
-  theme?: ReactNativePaper.Theme
-  /**
-   * Switch label
-   */
+type SwitchItemProps = ComponentProps<typeof Switch> & {
   label?: string
-  /**
-   *
-   */
   containerStyle?: StyleProp<ViewStyle>
 }
 

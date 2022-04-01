@@ -1,7 +1,7 @@
 import { Timetable } from '@models/Timetable'
 import { atom, DefaultValue, selector } from 'recoil'
-import { recoilPersist, PersistStorage } from 'recoil-persist'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+// import { recoilPersist, PersistStorage } from 'recoil-persist'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
 import { myTimetable } from '@constants/myTimetable'
 import { compile } from '@utils/timetable'
 import { cloneDeep, findIndex } from 'lodash'
@@ -11,9 +11,9 @@ type TimetablesStateType = {
   timetables: Timetable<'dynamic'>[]
 }
 
-const { persistAtom } = recoilPersist({
-  storage: AsyncStorage as PersistStorage,
-})
+// const { persistAtom } = recoilPersist({
+//   storage: AsyncStorage as PersistStorage,
+// })
 
 export const timetablesState = atom<TimetablesStateType>({
   key: 'timetablesState',

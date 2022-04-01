@@ -19,7 +19,3 @@ web-build/
 /web-build/*
 # electron-webpack
 /dist
-# @end @expo/electron-adapter
-
-# yarn.lock (security reasones)
-yarn.lock

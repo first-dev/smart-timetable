@@ -7,12 +7,16 @@ export const compile = ({ id, sessions }: Timetable<'dynamic'>): Timetable<'stat
   days: range(1, 6).map(i =>
     compileDay({ index: i, sessions: sessions.filter(({ dayIndex }) => dayIndex === i) }),
   ),
-  // .filter(v => v.sessions.length > 0),
 })
 const compileDay = ({ index, sessions }: Day<'dynamic'>): Day<'static'> => ({
   index,
   sessions: sessions
-    .filter(({ shelfLife }) => isWithinInterval(new Date().getTime(), shelfLife))
+    .filter(({ shelfLife: { start, end } }) =>
+      isWithinInterval(new Date().getTime(), {
+        start: start != null ? start : 0,
+        end: end != null ? end : 1e15,
+      }),
+    )
     .map(({ start, end, subjectId }) => ({
       start,
       end,
@@ -28,19 +32,3 @@ const isSessionHighlighted = (start: number, end: number) => {
   return start <= hours && hours <= end
 }
 const isDayHighlighted = (index: number) => index === new Date().getDay()
-
-// const calculateTimetableShelfLife = (days: Timetable<'dynamic'>['days']) => {
-//   const now = new Date()
-//   const transactionWeeks = days
-//     .map(({ sessions }) => sessions)
-//     .flat()
-//     .map(({ shelfLife: { start, end } }) => [start, end])
-//     .flat()
-//     .sort(compareAsc)
-//   const before = transactionWeeks.filter(date => isBefore(date, now))
-//   const after = transactionWeeks.filter(date => isAfter(date, now))
-//   return {
-//     start: closestTo(now, after) ?? now,
-//     end: closestTo(now, before) ?? now,
-//   }
-// }

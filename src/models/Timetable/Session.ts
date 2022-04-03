@@ -10,8 +10,8 @@ interface DynamicSession {
   start: number
   end: number
   shelfLife: {
-    start: Date
-    end: Date
+    start: Date | null
+    end: Date | null
   }
 }
 type Session<T extends 'static' | 'dynamic'> = T extends 'static' ? StaticSession : DynamicSession

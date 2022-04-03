@@ -22,14 +22,7 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
   const [subjectId, setSubjectId] = useState<string>()
   const [dayIndex, setDayIndex] = useState<number>()
   const onDone = useCallback(() => {
-    if (
-      dayIndex != undefined &&
-      subjectId != undefined &&
-      start != undefined &&
-      end != undefined &&
-      shelfLifeStart != undefined &&
-      shelfLifeEnd != undefined
-    )
+    if (dayIndex != undefined && subjectId != undefined && start != undefined && end != undefined)
       setActiveTimetable(currentActiveTimetable =>
         currentActiveTimetable != undefined
           ? addSession(currentActiveTimetable, {
@@ -37,7 +30,7 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
               subjectId,
               start: start.getHours() + start.getMinutes() / 60,
               end: end.getHours() + end.getMinutes() / 60,
-              shelfLife: { start: shelfLifeStart, end: shelfLifeEnd },
+              shelfLife: { start: shelfLifeStart ?? null, end: shelfLifeEnd ?? null },
             })
           : undefined,
       )

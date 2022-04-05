@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useRef } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Divider } from 'react-native-paper'
@@ -10,56 +10,168 @@ import { DayPicker, HeaderButton, DatePicker, TimePicker, Space } from '@compone
 import { useRecoilState } from 'recoil'
 import { activeTimetableState } from '@atoms/timetablesState'
 import { addSession } from '@utils/timetable/manager'
+import { Formik, FormikProps, FormikValues } from 'formik'
+import { compareAsc, parseJSON } from 'date-fns'
+import * as Yup from 'yup'
 
 type Props = NativeStackScreenProps<MainStackParamList, 'NewSessionScreen'>
+type Values = {
+  subjectId?: string
+  dayIndex?: string
+  start?: string
+  end?: string
+  shelfLifeStart?: string
+  shelfLifeEnd?: string
+}
 
 const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => {
   const [, setActiveTimetable] = useRecoilState(activeTimetableState)
-  const [start, setStart] = useState<Date>()
-  const [end, setEnd] = useState<Date>()
-  const [shelfLifeStart, setShelfLifeStartStart] = useState<Date>()
-  const [shelfLifeEnd, setShelfLifeEnd] = useState<Date>()
-  const [subjectId, setSubjectId] = useState<string>()
-  const [dayIndex, setDayIndex] = useState<number>()
-  const onDone = useCallback(() => {
-    if (dayIndex != undefined && subjectId != undefined && start != undefined && end != undefined)
-      setActiveTimetable(currentActiveTimetable =>
-        currentActiveTimetable != undefined
-          ? addSession(currentActiveTimetable, {
-              dayIndex,
+  const addSessionHandler = useCallback<(values: Values) => void>(
+    ({ subjectId, dayIndex, start, end, shelfLifeStart, shelfLifeEnd }) => {
+      if (
+        dayIndex != undefined &&
+        subjectId != undefined &&
+        start != undefined &&
+        end != undefined
+      ) {
+        const startDate = parseJSON(start)
+        const endDate = parseJSON(end)
+        setActiveTimetable(
+          currentActiveTimetable =>
+            currentActiveTimetable &&
+            addSession(currentActiveTimetable, {
+              dayIndex: parseInt(dayIndex),
               subjectId,
-              start: start.getHours() + start.getMinutes() / 60,
-              end: end.getHours() + end.getMinutes() / 60,
-              shelfLife: { start: shelfLifeStart ?? null, end: shelfLifeEnd ?? null },
-            })
-          : undefined,
-      )
-    goBack()
-  }, [dayIndex, end, goBack, setActiveTimetable, shelfLifeEnd, shelfLifeStart, start, subjectId])
-
+              start: startDate.getHours() + startDate.getMinutes() / 60,
+              end: endDate.getHours() + endDate.getMinutes() / 60,
+              shelfLife: {
+                start: shelfLifeStart ? parseJSON(shelfLifeStart) : null,
+                end: shelfLifeEnd ? parseJSON(shelfLifeEnd) : null,
+              },
+            }),
+        )
+      }
+      goBack()
+    },
+    [goBack, setActiveTimetable],
+  )
+  const formRef = useRef<FormikProps<FormikValues>>(null)
   useEffect(() => {
     setOptions({
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item title="Add new session" iconName="done" onPress={onDone} />
+          <Item title="Add new session" iconName="done" onPress={formRef.current?.handleSubmit} />
         </HeaderButtons>
       ),
     })
-  }, [onDone, setOptions])
+  }, [setOptions])
+  const validationSchema = Yup.object().shape(
+    {
+      subjectId: Yup.string().required(),
+      dayIndex: Yup.string().required(),
+      start: Yup.string()
+        // using when to access end
+        .when(['end'], end =>
+          // using schema with test to access start
+          Yup.string().test(
+            // the start should be before the end
+            // if end is undefined the first statement will return false even if start is set
+            // (!end && start) prevent that
+            start =>
+              (start && end && compareAsc(parseJSON(end), parseJSON(start)) === 1) ||
+              (start && !end),
+          ),
+        ),
+      end: Yup.string()
+        .required()
+        .when(['start'], start =>
+          Yup.string().test(
+            end =>
+              (start && end && compareAsc(parseJSON(end), parseJSON(start)) === 1) ||
+              (!start && end),
+          ),
+        ),
+      shelfLifeStart: Yup.string().when(['shelfLifeEnd'], shelfLifeEnd =>
+        Yup.string().test(
+          shelfLifeStart =>
+            (shelfLifeStart &&
+              shelfLifeEnd &&
+              compareAsc(parseJSON(shelfLifeEnd), parseJSON(shelfLifeStart)) === 1) ||
+            // not valid if shelfLifeEnd is set white shelfLifeStart is not
+            !shelfLifeEnd,
+        ),
+      ),
+      shelfLifeEnd: Yup.string().when(['shelfLifeStart'], shelfLifeStart =>
+        Yup.string().test(
+          shelfLifeEnd =>
+            (shelfLifeStart &&
+              shelfLifeEnd &&
+              compareAsc(parseJSON(shelfLifeEnd), parseJSON(shelfLifeStart)) === 1) ||
+            !shelfLifeStart,
+        ),
+      ),
+    },
+    [
+      // to avoid cyclic dependency
+      ['start', 'end'],
+      ['shelfLifeStart', 'shelfLifeEnd'],
+    ],
+  )
   return (
     <View style={styles.screen}>
-      <Divider />
-      <SubjectPicker subjects={mySubjects} onSelect={setSubjectId} value={subjectId} />
-      <Space topDivider bottomDivider />
-      <DayPicker value={dayIndex} onSelect={setDayIndex} />
-      <Divider />
-      <TimePicker label="Start" value={start} onChange={setStart} />
-      <Divider />
-      <TimePicker label="End" value={end} onChange={setEnd} />
-      <Space topDivider bottomDivider />
-      <DatePicker label="First" value={shelfLifeStart} onChange={setShelfLifeStartStart} />
-      <Divider />
-      <DatePicker label="Last" value={shelfLifeEnd} onChange={setShelfLifeEnd} />
+      <Formik
+        initialValues={{} as Values}
+        validationSchema={validationSchema}
+        onSubmit={addSessionHandler}
+        validateOnBlur={false}
+        validateOnChange={false}
+        innerRef={formRef}>
+        {({ values, errors, handleChange }) => (
+          <>
+            <Divider />
+            <SubjectPicker
+              subjects={mySubjects}
+              onChange={handleChange('subjectId')}
+              value={values.subjectId}
+              error={!!errors.subjectId}
+            />
+            <Space topDivider bottomDivider />
+            <DayPicker
+              value={values.dayIndex}
+              onChange={handleChange('dayIndex')}
+              error={!!errors.dayIndex}
+            />
+            <Divider />
+            <TimePicker
+              label="Start"
+              value={values.start}
+              onChange={handleChange('start')}
+              error={!!errors.start}
+            />
+            <Divider />
+            <TimePicker
+              label="End"
+              value={values.end}
+              onChange={handleChange('end')}
+              error={!!errors.end}
+            />
+            <Space topDivider bottomDivider />
+            <DatePicker
+              label="First"
+              value={values.shelfLifeStart}
+              onChange={handleChange('shelfLifeStart')}
+              error={!!errors.shelfLifeStart}
+            />
+            <Divider />
+            <DatePicker
+              label="Last"
+              value={values.shelfLifeEnd}
+              onChange={handleChange('shelfLifeEnd')}
+              error={!!errors.shelfLifeEnd}
+            />
+          </>
+        )}
+      </Formik>
     </View>
   )
 }

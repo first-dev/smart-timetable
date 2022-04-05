@@ -1,8 +1,7 @@
 import { FC, ComponentProps } from 'react'
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
-import { RadioButton } from 'react-native-paper'
+import { RadioButton, Text } from 'react-native-paper'
 import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
-import Text from './Text'
 
 type Props = {
   style?: StyleProp<ViewStyle>
@@ -21,12 +20,6 @@ const RadioItem: FC<Props> = ({ style, ...rest }) => {
         />
       </View>
     </TouchableNativeFeedback>
-    // <View style={[styles.row, props.containerStyle]}>
-    //   <Text style={styles.label}>{props.label}</Text>
-    //   <View pointerEvents="none">
-    //     <Switch {...props} value={value} />
-    //   </View>
-    // </View>
   )
 }
 export default gestureHandlerRootHOC(RadioItem, { flex: 0 })

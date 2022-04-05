@@ -1,58 +1,40 @@
 import { FC, useState } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle, ScrollView, Platform } from 'react-native'
-import {
-  gestureHandlerRootHOC,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler'
-import { Dialog, Portal, useTheme, RadioButton } from 'react-native-paper'
-import Text from './Text'
+import { ScrollView, StyleSheet } from 'react-native'
+import { Portal, Dialog, RadioButton } from 'react-native-paper'
 import Icon from './Icon'
-
-const Touchable = (
-  Platform.OS === 'web' ? TouchableOpacity : TouchableNativeFeedback
-) as // dirty workaround to avoid types conflict
-typeof TouchableOpacity
+import Picker, { PickerProps } from './Picker'
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const
 
-type Props = {
-  style?: StyleProp<ViewStyle>
-  onSelect: (dayIndex: number) => void
-  placeholder?: string
-  value?: number
-}
+type Props = PickerProps
 
-const SubjectPicker: FC<Props> = ({ style, placeholder = 'Pick a day', value, onSelect }) => {
+const SubjectPicker: FC<Props> = ({
+  style,
+  placeholder = 'Pick a day',
+  value,
+  onChange,
+  ...rest
+}) => {
   const [visible, setVisible] = useState(false)
-  const {
-    colors: { placeholder: placeholderColor },
-  } = useTheme()
   const onPress = () => setVisible(true)
   const onDismiss = () => setVisible(false)
   const onValueChanged = (newValue: string) => {
-    onSelect(Number(newValue))
+    onChange?.(newValue)
     onDismiss()
   }
   return (
     <>
-      <Touchable style={[styles.container, style]} onPress={onPress}>
-        <Icon pack="MaterialCommunityIcons" icon="calendar" />
-        <View style={styles.valueContainer}>
-          <Text style={styles.value}>
-            {value != undefined ? (
-              days[value]
-            ) : (
-              <Text style={{ color: placeholderColor }}>{placeholder}</Text>
-            )}
-          </Text>
-        </View>
-      </Touchable>
+      <Picker
+        value={value != undefined ? days[parseInt(value)] : undefined}
+        onPress={onPress}
+        icon={<Icon pack="MaterialCommunityIcons" icon="calendar" />}
+        placeholder={placeholder}
+        style={style}
+        {...rest}
+      />
       <Portal>
         <Dialog visible={visible} onDismiss={onDismiss} style={styles.dialog}>
-          <Dialog.Title onPressIn={null} onPressOut={null}>
-            Pick a day
-          </Dialog.Title>
+          <Dialog.Title>Pick a day</Dialog.Title>
           <Dialog.ScrollArea style={{ paddingHorizontal: 0 }}>
             <ScrollView>
               <RadioButton.Group value={String(value) ?? ''} onValueChange={onValueChanged}>
@@ -74,22 +56,8 @@ const SubjectPicker: FC<Props> = ({ style, placeholder = 'Pick a day', value, on
     </>
   )
 }
-export default gestureHandlerRootHOC(SubjectPicker, { flex: undefined })
+export default SubjectPicker
 const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexShrink: 1,
-  },
-  valueContainer: {
-    paddingLeft: 16,
-    flex: 1,
-  },
-  value: {
-    flexShrink: 1,
-    fontSize: 18,
-  },
   dialog: {
     marginVertical: 200,
   },

@@ -1,25 +1,12 @@
 import { FC, useState } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle, ScrollView, Platform } from 'react-native'
-import {
-  gestureHandlerRootHOC,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler'
-import { Dialog, Portal, useTheme, RadioButton } from 'react-native-paper'
-import { Text, Icon } from '@components/UI'
+import { ScrollView, StyleSheet } from 'react-native'
+import { Portal, Dialog, RadioButton } from 'react-native-paper'
 import { Subject } from '@models'
+import { Picker, Icon } from '@components/UI'
+import { PickerProps } from './UI/Picker'
 
-// dirty workaround to avoid types conflict
-const Touchable = (
-  Platform.OS === 'web' ? TouchableOpacity : TouchableNativeFeedback
-) as typeof TouchableOpacity
-
-type Props = {
-  style?: StyleProp<ViewStyle>
+type Props = PickerProps<string> & {
   subjects: Subject[]
-  onSelect: (subjectId: string) => void
-  placeholder?: string
-  value?: string
 }
 
 const SubjectPicker: FC<Props> = ({
@@ -27,38 +14,30 @@ const SubjectPicker: FC<Props> = ({
   placeholder = 'Pick a subject',
   value,
   subjects,
-  onSelect,
+  onChange,
+  ...rest
 }) => {
   const [visible, setVisible] = useState(false)
-  const {
-    colors: { placeholder: placeholderColor },
-  } = useTheme()
   const onPress = () => setVisible(true)
   const onDismiss = () => setVisible(false)
   const onValueChanged = (newValue: string) => {
-    onSelect(newValue)
+    onChange?.(newValue)
     onDismiss()
   }
   const pickedSubject = subjects.find(({ id }) => id === value)
   return (
     <>
-      <Touchable style={[styles.container, style]} onPress={onPress}>
-        <Icon pack="MaterialIcons" icon="school" />
-        <View style={styles.valueContainer}>
-          <Text style={styles.value}>
-            {value ? (
-              pickedSubject?.name
-            ) : (
-              <Text style={{ color: placeholderColor }}>{placeholder}</Text>
-            )}
-          </Text>
-        </View>
-      </Touchable>
+      <Picker
+        value={pickedSubject?.name}
+        onPress={onPress}
+        icon={<Icon pack="MaterialIcons" icon="school" />}
+        placeholder={placeholder}
+        style={style}
+        {...rest}
+      />
       <Portal>
         <Dialog visible={visible} onDismiss={onDismiss} style={styles.dialog}>
-          <Dialog.Title onPressIn={null} onPressOut={null}>
-            Pick a subject
-          </Dialog.Title>
+          <Dialog.Title>Pick a subject</Dialog.Title>
           <Dialog.ScrollArea style={{ paddingHorizontal: 0 }}>
             <ScrollView>
               <RadioButton.Group value={value ?? ''} onValueChange={onValueChanged}>
@@ -80,22 +59,8 @@ const SubjectPicker: FC<Props> = ({
     </>
   )
 }
-export default gestureHandlerRootHOC(SubjectPicker, { flex: undefined })
+export default SubjectPicker
 const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexShrink: 1,
-  },
-  valueContainer: {
-    paddingLeft: 16,
-    flex: 1,
-  },
-  value: {
-    flexShrink: 1,
-    fontSize: 18,
-  },
   dialog: {
     marginVertical: 200,
   },

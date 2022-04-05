@@ -12,4 +12,4 @@
 
 or scan QR code
 
-![QR code](assets/expo-go-qr-code.svg =x300)
+<img src="assets/expo-go-qr-code.svg" alt="QR code" width="300">

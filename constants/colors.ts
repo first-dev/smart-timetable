@@ -9,6 +9,7 @@ export default {
   text: Colors.grey700,
   secondaryText: Colors.grey600,
   faintText: Colors.grey400,
+  error: Colors.red800,
 }
 // const dark = (color: string) => {
 

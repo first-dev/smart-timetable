@@ -23,7 +23,6 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "date-fns": "^2.28.0",
-    "easy-peasy": "^5.0.4",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
@@ -45,6 +44,7 @@
     "react-navigation-header-buttons": "^9.0.1",
     "recoil": "^0.6.1",
     "recoil-persist": "^4.0.0",
+    "tinycolor2": "^1.4.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -54,7 +54,7 @@
     "@types/lodash": "^4.14.179",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
-    "@types/recoilize": "^0.8.0",
+    "@types/tinycolor2": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "babel-loader": "^8.2.3",
@@ -67,7 +67,6 @@
     "eslint-plugin-react-native": "^4.0.0",
     "gh-pages": "^3.2.3",
     "prettier": "^2.5.1",
-    "recoilize": "^2.0.1",
     "typescript": "~4.3.5"
   },
   "private": true,

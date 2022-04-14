@@ -22,9 +22,7 @@ const SubjectsView: FC<Props> = ({ subjects }) => {
           nativeEvent: {
             layout: { width },
           },
-        }) => {
-          setWidth(width)
-        }}
+        }) => width && setWidth(width)}
       />
     </View>
   )

@@ -3,12 +3,13 @@ import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { useTheme, Text } from 'react-native-paper'
 import { spacing, fonts, colors } from '@constants'
-import { Icon } from '@components/UI'
+import Icon from '@components/UI/Icon'
 
 export type PickerProps<T = string> = {
   style?: StyleProp<ViewStyle>
   label?: string
   value?: T
+  valueComponent?: ReactNode
   placeholder?: string
   icon?: ReactNode
   error?: boolean
@@ -22,6 +23,7 @@ const Picker = ({
   placeholder,
   icon,
   error,
+  valueComponent,
   ...rest
 }: PickerProps<string> & { children?: ReactNode }) => {
   const {
@@ -36,9 +38,13 @@ const Picker = ({
         </View>
       )}
       <View style={styles.valueContainer}>
-        <Text style={styles.value}>
-          {value ?? <Text style={{ color: placeholderColor }}>{placeholder}</Text>}
-        </Text>
+        {valueComponent ? (
+          valueComponent
+        ) : (
+          <Text style={styles.value}>
+            {value ?? <Text style={{ color: placeholderColor }}>{placeholder}</Text>}
+          </Text>
+        )}
       </View>
       <View style={styles.errorContainer}>
         {error && <Icon pack="MaterialCommunityIcons" icon="close-circle" color={colors.error} />}
@@ -48,7 +54,6 @@ const Picker = ({
 }
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: spacing.xl,
     paddingHorizontal: spacing.l,
     flexDirection: 'row',
     alignItems: 'center',
@@ -56,6 +61,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     paddingRight: spacing.l,
+    paddingVertical: spacing.xl,
   },
   labelContainer: {
     width: 60,

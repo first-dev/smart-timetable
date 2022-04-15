@@ -9,46 +9,73 @@ import Picker, { PickerProps } from '../Picker'
 import Grid from './Grid'
 import Variants from './Variants'
 
-type Props = PickerProps
-const colorsList = uniq(
+type Color = {
+  main: string
+  variants: string[]
+}
+type Props = PickerProps & {
+  colors?: Color[]
+}
+const defaultColors: Color[] = uniq(
   Object.keys(Colors)
     .map(s => s.replace(/[0-9]/g, ''))
-    .filter(s => !s.endsWith('A') && !['black', 'white', 'transparent'].includes(s))
-    .map(s => `${s}500`)
-    .map(s => Colors[s as never]),
-)
+    .filter(s => !s.endsWith('A') && !['black', 'white', 'transparent'].includes(s)),
+).map(colorName => ({
+  main: Colors[`${colorName}500` as never],
+  variants: [
+    Colors[`${colorName}100` as never],
+    Colors[`${colorName}300` as never],
+    Colors[`${colorName}500` as never],
+    Colors[`${colorName}700` as never],
+    Colors[`${colorName}900` as never],
+  ],
+}))
+
 const ColorPicker: FC<Props> = ({
-  value,
   style,
   placeholder = 'Pick a color',
   onChange,
+  colors = defaultColors,
   ...rest
 }) => {
   const [visible, setVisible] = useState(false)
-  const [activeGridColor, setActiveGridColor] = useState('')
-  const [activeColor, setActiveColor] = useState('')
-  const activeGridColorName = Object.keys(Colors)
-    .find(key => Colors[key as never] === activeGridColor)
-    ?.replace(/[0-9]/g, '')
+  const [activeGridColorIndex, setActiveGridColorIndex] = useState<number>()
+  const [activeVariantColorIndex, setActiveVariantColorIndex] = useState<number>()
+  const [value, setValue] = useState<{
+    activeColor?: string
+    activeGridColorIndex?: number
+    activeVariantColorIndex?: number
+  }>({})
+  const activeColor =
+    activeGridColorIndex != undefined &&
+    activeVariantColorIndex != undefined &&
+    colors[activeGridColorIndex].variants[activeVariantColorIndex]
   const pressHandler = () => {
-    if (value) {
-      setActiveColor(value)
-      const activeValueColorName = Object.keys(Colors)
-        .find(key => Colors[key as never] === value)
-        ?.replace(/[0-9]/g, '')
-      setActiveGridColor(Colors[`${activeValueColorName}500` as never])
-    }
+    setActiveGridColorIndex(value.activeGridColorIndex)
+    setActiveVariantColorIndex(value.activeVariantColorIndex)
     setVisible(true)
   }
   const dismissHandler = () => setVisible(false)
   const submitHandler = () => {
-    onChange?.(activeColor)
+    if (activeColor) {
+      onChange?.(activeColor)
+      setValue({
+        activeColor,
+        activeGridColorIndex,
+        activeVariantColorIndex,
+      })
+    }
     dismissHandler()
   }
+
   return (
     <>
       <Picker
-        valueComponent={value && <View style={[styles.value, { backgroundColor: value }]} />}
+        valueComponent={
+          value.activeColor && (
+            <View style={[styles.value, { backgroundColor: value.activeColor }]} />
+          )
+        }
         onPress={pressHandler}
         icon={<Icon pack="MaterialIcons" icon="colorize" />}
         placeholder={placeholder}
@@ -61,25 +88,23 @@ const ColorPicker: FC<Props> = ({
           <Dialog.ScrollArea style={{ paddingHorizontal: 0 }}>
             <ScrollView style={{ paddingHorizontal: spacing.l }}>
               <Grid
-                colors={colorsList}
+                style={styles.grid}
                 itemSize={50}
                 spacing={spacing.xs}
-                activeColor={activeGridColor}
-                onActiveColorChange={setActiveGridColor}
-                style={styles.grid}
+                colors={colors.map(color => color.main)}
+                activeColorIndex={activeGridColorIndex}
+                onActiveColorChange={setActiveGridColorIndex}
               />
               <Divider />
               <Variants
-                colors={[
-                  Colors[`${activeGridColorName}100` as never],
-                  Colors[`${activeGridColorName}300` as never],
-                  Colors[`${activeGridColorName}500` as never],
-                  Colors[`${activeGridColorName}700` as never],
-                  Colors[`${activeGridColorName}900` as never],
-                ]}
-                activeColor={activeColor}
                 style={styles.variants}
-                onActiveColorChange={setActiveColor}
+                colors={
+                  activeGridColorIndex != undefined
+                    ? colors[activeGridColorIndex].variants
+                    : undefined
+                }
+                activeColorIndex={activeVariantColorIndex}
+                onActiveColorChange={setActiveVariantColorIndex}
               />
             </ScrollView>
           </Dialog.ScrollArea>
@@ -96,6 +121,7 @@ const ColorPicker: FC<Props> = ({
     </>
   )
 }
+
 export default ColorPicker
 const styles = StyleSheet.create({
   dialog: {
@@ -115,7 +141,7 @@ const styles = StyleSheet.create({
   },
   value: {
     height: 24,
-    aspectRatio: 2,
+    width: 24 * 4,
     borderRadius: 12,
   },
 })

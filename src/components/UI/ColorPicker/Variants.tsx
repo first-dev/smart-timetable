@@ -1,21 +1,22 @@
 import { range } from 'lodash'
 import { FC } from 'react'
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
-import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
+import PlatformTouchable from '../PlatformTouchable'
 
 type Props = {
   style?: StyleProp<ViewStyle>
-  colors: [string, string, string, string, string]
-  activeColor?: string
-  onActiveColorChange?: (newActiveColor: string) => void
+  colors?: string[]
+  activeColorIndex?: number
+  onActiveColorChange?: (newActiveColorIndex: number) => void
 }
 
-const Variants: FC<Props> = ({ style, colors, activeColor, onActiveColorChange }) => {
+const Variants: FC<Props> = ({ style, colors = [], activeColorIndex, onActiveColorChange }) => {
   return (
     <View style={[styles.container, style]}>
-      {range(5).map(i => {
+      {range(colors.length).map(i => {
         const color = colors[i]
-        const active = color === activeColor
+        const active = activeColorIndex != undefined && color === colors[activeColorIndex]
         const height = active ? 56 : 50
         return (
           <View
@@ -25,8 +26,8 @@ const Variants: FC<Props> = ({ style, colors, activeColor, onActiveColorChange }
               backgroundColor: color,
               height,
             }}>
-            <TouchableNativeFeedback
-              onPress={() => onActiveColorChange?.(color)}
+            <PlatformTouchable
+              onPress={() => onActiveColorChange?.(i)}
               style={{ height: height }}
             />
           </View>

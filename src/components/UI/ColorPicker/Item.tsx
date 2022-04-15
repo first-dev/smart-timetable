@@ -1,8 +1,9 @@
 import { FC } from 'react'
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
-import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
 import { Colors } from 'react-native-paper'
 import tinycolor from 'tinycolor2'
+import PlatformTouchable from '../PlatformTouchable'
 
 type Props = {
   style?: StyleProp<ViewStyle>
@@ -26,9 +27,7 @@ const Item: FC<Props> = ({ style, color, size = 60, onPress, active }) => {
         },
         style,
       ]}>
-      {color && (
-        <TouchableNativeFeedback onPress={onPress} style={{ width: size, aspectRatio: 1 }} />
-      )}
+      {color && <PlatformTouchable onPress={onPress} style={{ width: size, aspectRatio: 1 }} />}
     </View>
   )
 }

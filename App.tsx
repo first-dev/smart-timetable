@@ -1,17 +1,18 @@
 import { StatusBar } from 'expo-status-bar'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, LogBox } from 'react-native'
 import { Providers } from '@utils'
 import { MainNavigator } from '@navigation'
-//TODO remove
+//TODO-remove
 import 'react-native-console-time-polyfill'
+LogBox.ignoreLogs(['timer'])
 
 /*
-TODO Features:
+TODO-Features:
 * ////dynamic timetable (changes based on current date)
 * swipe horizontally to navigate between weeks {TimetableView}
 
 
-TODO Bugs:
+TODO-Bugs:
 ! can't access header buttons when header is not shown
 ! statusbar overlaps with content on landscape mode
 */

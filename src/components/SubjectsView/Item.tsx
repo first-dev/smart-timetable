@@ -10,12 +10,14 @@ type SubjectProps = {
 const Item: FC<SubjectProps> = ({ subject: { name, color }, style }) => {
   return (
     <View style={[styles.container, style]}>
-      <View style={[styles.inner, { backgroundColor: color }]}>
-        <View style={styles.header}>
+      <View style={styles.inner}>
+        <View style={[styles.header, { backgroundColor: color }]}>
           <Text style={styles.text} numberOfLines={2}>
             {name}
+            {/* this is long ass text just for testing how it would look on multiple lines */}
           </Text>
         </View>
+        <View style={styles.body}></View>
       </View>
     </View>
   )
@@ -36,8 +38,13 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     padding: 4,
+    height: 50,
   },
   text: {
     color: 'white',
+  },
+  body: {
+    height: 100,
+    backgroundColor: 'grey',
   },
 })

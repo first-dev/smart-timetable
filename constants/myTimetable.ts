@@ -2,30 +2,9 @@ import { Subject } from '@models'
 import { Timetable } from '@models/Timetable'
 import { Colors } from 'react-native-paper'
 
-export const myTimetable2: Timetable<'dynamic'> = {
+export const emptyTimetable: Timetable<'dynamic'> = {
   id: 'S2',
-  sessions: [
-    {
-      dayIndex: 2,
-      subjectId: 'M12-1',
-      start: 6,
-      end: 10,
-      shelfLife: {
-        start: new Date(2022, 1, 1),
-        end: new Date(2023, 1, 1),
-      },
-    },
-    {
-      dayIndex: 3,
-      subjectId: 'M12-1',
-      start: 6,
-      end: 10,
-      shelfLife: {
-        start: new Date(2022, 1, 1),
-        end: new Date(2023, 1, 1),
-      },
-    },
-  ],
+  sessions: [],
 }
 
 export const myTimetable: Timetable<'dynamic'> = {

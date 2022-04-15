@@ -1,19 +1,13 @@
-// import { timetablesState } from '@atoms/timetablesState'
+import { TimetablesStateType } from '@atoms/timetablesState'
 import { Session, Timetable } from '@models/Timetable'
-// import { useRecoilState } from 'recoil'
 import { cloneDeep } from 'lodash'
 
-// const useTimetableManager = () => {
-//   const [timetablesStateValue, setTimetablesStateValue] = useRecoilState(timetablesState)
-//   return {}
-// }
-
-// type Return = {
-//   activeTimetable: {
-//     dynamic: Timetable<'dynamic'>
-//     static: Timetable<'static'>
-//   }
-// }
+export const parseTimetableState = (text: string): TimetablesStateType | null => {
+  return JSON.parse(text, (key, value) => {
+    if (['start', 'end'].includes(key) && typeof value === 'string') return new Date(value)
+    else return value
+  })
+}
 
 export const addSession = (
   timetable: Timetable<'dynamic'>,

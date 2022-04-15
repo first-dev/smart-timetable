@@ -1,5 +1,4 @@
-import { FC } from 'react'
-// import { StoreProvider } from 'easy-peasy'
+import { FC, Suspense, useState } from 'react'
 import { RecoilRoot } from 'recoil'
 import {
   NavigationContainer,
@@ -7,9 +6,11 @@ import {
 } from '@react-navigation/native'
 import { Provider as PaperProvider, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-// import { SafeAreaProvider } from 'react-native-safe-area-context'
-// import store from '@store'
 import { colors } from '@constants'
+import LoadingIndicator from '@components/UI/LoadingIndicator'
+import { initializeTimetablesState } from '@atoms/timetablesState'
+import { initializeSubjectsState } from '@atoms/subjectsState'
+import * as SplashScreen from 'expo-splash-screen'
 
 const paperTheme: typeof PaperDefaultTheme = {
   ...PaperDefaultTheme,
@@ -19,6 +20,7 @@ const paperTheme: typeof PaperDefaultTheme = {
     accent: colors.accent,
     text: colors.text,
     placeholder: colors.faintText,
+    error: colors.error,
   },
 }
 const navigationTheme: typeof NavigationDefaultTheme = {
@@ -31,10 +33,11 @@ const navigationTheme: typeof NavigationDefaultTheme = {
     border: 'transparent',
   },
 }
+SplashScreen.preventAutoHideAsync()
 const Providers: FC = ({ children }) => {
+  const [isInitialized, setIsInitialized] = useState(false)
   return (
     <>
-      {/* <SafeAreaProvider> */}
       <PaperProvider
         theme={paperTheme}
         settings={{
@@ -45,13 +48,22 @@ const Providers: FC = ({ children }) => {
               return <MaterialCommunityIcons {...props} name={props.name as any} />
           },
         }}>
-        {/* <StoreProvider store={store}> */}
-        <RecoilRoot>
-          <NavigationContainer theme={navigationTheme}>{children}</NavigationContainer>
-        </RecoilRoot>
-        {/* </StoreProvider> */}
+        <Suspense fallback={<LoadingIndicator />}>
+          <RecoilRoot
+            initializeState={async mutableSnapshot => {
+              await Promise.all([
+                initializeTimetablesState(mutableSnapshot),
+                initializeSubjectsState(mutableSnapshot),
+              ])
+              setIsInitialized(true)
+              SplashScreen.hideAsync()
+            }}>
+            {isInitialized && (
+              <NavigationContainer theme={navigationTheme}>{children}</NavigationContainer>
+            )}
+          </RecoilRoot>
+        </Suspense>
       </PaperProvider>
-      {/* </SafeAreaProvider> */}
     </>
   )
 }

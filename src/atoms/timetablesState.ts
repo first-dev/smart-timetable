@@ -1,28 +1,30 @@
 import { Timetable } from '@models/Timetable'
-import { atom, DefaultValue, selector } from 'recoil'
-// import { recoilPersist, PersistStorage } from 'recoil-persist'
-// import AsyncStorage from '@react-native-async-storage/async-storage'
-import { myTimetable } from '@constants/myTimetable'
-import { compile } from '@utils/timetable'
+import { atom, DefaultValue, MutableSnapshot, selector } from 'recoil'
+import { emptyTimetable } from '@constants/myTimetable'
+import { compile, parseTimetableState } from '@utils/timetable'
 import { cloneDeep, findIndex } from 'lodash'
+import { persistAtom } from '@utils/storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-type TimetablesStateType = {
+export type TimetablesStateType = {
   active: Timetable<'dynamic'>['id'] | null
   timetables: Timetable<'dynamic'>[]
 }
-
-// const { persistAtom } = recoilPersist({
-//   storage: AsyncStorage as PersistStorage,
-// })
 
 export const timetablesState = atom<TimetablesStateType>({
   key: 'timetablesState',
   default: {
     active: 'S2',
-    timetables: [myTimetable],
+    timetables: [emptyTimetable],
   },
-  // effects: [persistAtom],
+  effects: [persistAtom('timetablesState')],
 })
+
+export const initializeTimetablesState = async ({ set }: MutableSnapshot) => {
+  const savedValue = await AsyncStorage.getItem(timetablesState.key)
+  const value = savedValue != null ? parseTimetableState(savedValue) : new DefaultValue()
+  value && set(timetablesState, value)
+}
 
 export const activeTimetableState = selector<Timetable<'dynamic'> | undefined>({
   key: 'activeTimetableState',
@@ -44,6 +46,7 @@ export const activeTimetableState = selector<Timetable<'dynamic'> | undefined>({
       return timetablesStateValue
     }),
 })
+
 export const activeTimetableIdState = selector<string | null>({
   key: 'setActiveTimetable',
   get: ({ get }) => get(timetablesState).active,

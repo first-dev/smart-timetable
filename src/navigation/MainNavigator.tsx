@@ -1,12 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import DrawerNavigator from './DrawerNavigator'
-import { NewSessionScreen } from '@screens'
+import { NewSessionScreen, NewSubjectScreen } from '@screens'
 
 export type MainStackParamList = {
   DrawerNavigator: undefined
   LoginScreen: undefined
   SetupScreen: undefined
   NewSessionScreen: undefined
+  NewSubjectScreen: undefined
 }
 
 const Stack = createNativeStackNavigator<MainStackParamList>()
@@ -25,6 +26,11 @@ const MainNavigator = () => (
     <Stack.Screen
       name="NewSessionScreen"
       component={NewSessionScreen}
+      options={{ headerTitle: '' }}
+    />
+    <Stack.Screen
+      name="NewSubjectScreen"
+      component={NewSubjectScreen}
       options={{ headerTitle: '' }}
     />
   </Stack.Navigator>

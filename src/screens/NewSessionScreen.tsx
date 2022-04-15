@@ -1,18 +1,18 @@
 import { FC, useCallback, useEffect, useRef } from 'react'
-import { View, StyleSheet } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Divider } from 'react-native-paper'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { MainStackParamList } from '@navigation/MainNavigator'
 import { SubjectPicker } from '@components'
-import { mySubjects } from '@constants/myTimetable'
 import { DayPicker, HeaderButton, DatePicker, TimePicker, Space } from '@components/UI'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { activeTimetableState } from '@atoms/timetablesState'
-import { addSession } from '@utils/timetable/manager'
+import { addSession } from '@utils/timetable'
 import { Formik, FormikProps, FormikValues } from 'formik'
 import { compareAsc, parseJSON } from 'date-fns'
 import * as Yup from 'yup'
+import { subjectsState } from '@atoms/subjectsState'
+import Screen from './Screen'
 
 type Props = NativeStackScreenProps<MainStackParamList, 'NewSessionScreen'>
 type Values = {
@@ -26,6 +26,7 @@ type Values = {
 
 const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => {
   const [, setActiveTimetable] = useRecoilState(activeTimetableState)
+  const subjects = useRecoilValue(subjectsState)
   const addSessionHandler = useCallback<(values: Values) => void>(
     ({ subjectId, dayIndex, start, end, shelfLifeStart, shelfLifeEnd }) => {
       if (
@@ -118,7 +119,7 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
     ],
   )
   return (
-    <View style={styles.screen}>
+    <Screen>
       <Formik
         initialValues={{} as Values}
         validationSchema={validationSchema}
@@ -130,7 +131,7 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
           <>
             <Divider />
             <SubjectPicker
-              subjects={mySubjects}
+              subjects={subjects}
               onChange={handleChange('subjectId')}
               value={values.subjectId}
               error={!!errors.subjectId}
@@ -172,12 +173,7 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
           </>
         )}
       </Formik>
-    </View>
+    </Screen>
   )
 }
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-})
 export default NewSessionScreen

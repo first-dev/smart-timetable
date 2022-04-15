@@ -4,6 +4,7 @@ import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-ges
 import { useTheme, Text } from 'react-native-paper'
 import { spacing, fonts, colors } from '@constants'
 import Icon from '@components/UI/Icon'
+import PlatformTouchable from './PlatformTouchable'
 
 export type PickerProps<T = string> = {
   style?: StyleProp<ViewStyle>
@@ -30,7 +31,7 @@ const Picker = ({
     colors: { placeholder: placeholderColor },
   } = useTheme()
   return (
-    <TouchableNativeFeedback style={[styles.container, style]} {...rest}>
+    <PlatformTouchable style={[styles.container, style]} {...rest}>
       <View style={styles.iconContainer}>{icon}</View>
       {label && (
         <View style={styles.labelContainer}>
@@ -49,7 +50,7 @@ const Picker = ({
       <View style={styles.errorContainer}>
         {error && <Icon pack="MaterialCommunityIcons" icon="close-circle" color={colors.error} />}
       </View>
-    </TouchableNativeFeedback>
+    </PlatformTouchable>
   )
 }
 const styles = StyleSheet.create({

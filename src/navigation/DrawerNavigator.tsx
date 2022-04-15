@@ -28,13 +28,15 @@ const DrawerNavigator = () => {
   const transformThreshold = 800
   return (
     <Drawer.Navigator
-      initialRouteName="TimetableScreen"
+      initialRouteName="SubjectsScreen"
       drawerContent={props => <Content {...props} />}
+      useLegacyImplementation
       screenOptions={{
         headerTintColor: colors.primary,
         headerShadowVisible: false,
         drawerType: width > transformThreshold ? 'permanent' : 'front',
         headerShown: width <= transformThreshold,
+        lazy: false,
       }}>
       <Drawer.Screen name="OverviewScreen" component={OverviewScreen} />
       <Drawer.Screen

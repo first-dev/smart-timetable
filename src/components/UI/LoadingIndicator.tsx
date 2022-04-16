@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 
 type Props = {

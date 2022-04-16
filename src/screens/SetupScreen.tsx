@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import { MainStackParamList } from '@navigation/MainNavigator'
-import Screen from './Screen'
+import { Screen } from '@components/UI'
 
 type Props = NativeStackScreenProps<MainStackParamList, 'SetupScreen'>
 

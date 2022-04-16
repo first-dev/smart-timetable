@@ -1,7 +1,7 @@
-import { FC, ComponentProps } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
-import { RadioButton, Text } from 'react-native-paper'
+import { ComponentProps, FC } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { RadioButton, Text } from 'react-native-paper'
 
 type Props = {
   style?: StyleProp<ViewStyle>

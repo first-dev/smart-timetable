@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { StyleSheet, ScaledSize, Dimensions } from 'react-native'
+import { useEffect, useState } from 'react'
+import { Dimensions, ScaledSize, StyleSheet } from 'react-native'
 
 type StylesProvider<T> = (window: ScaledSize, screen: ScaledSize) => StyleSheet.NamedStyles<T>
 /**

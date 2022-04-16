@@ -1,10 +1,10 @@
+import { colors } from '@constants'
+import { DrawerParamList } from '@navigation/DrawerNavigator'
+import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer'
 import { FC, Fragment } from 'react'
 import { StyleSheet } from 'react-native'
-import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer'
 import { Colors, Divider, Drawer } from 'react-native-paper'
-import { DrawerParamList } from '@navigation/DrawerNavigator'
 import Header from './Header'
-import { colors } from '@constants'
 
 const getIcon = (name: keyof DrawerParamList) => {
   switch (name) {

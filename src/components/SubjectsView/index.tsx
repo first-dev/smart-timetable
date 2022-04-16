@@ -1,7 +1,7 @@
-import { FC, useState } from 'react'
-import { View, StyleSheet, FlatList, Dimensions } from 'react-native'
-import Item from './Item'
 import { Subject } from '@models'
+import { FC, useState } from 'react'
+import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
+import Item from './Item'
 
 type Props = {
   subjects: Subject[]

@@ -1,6 +1,6 @@
 import { range } from 'lodash'
 import { FC } from 'react'
-import { View, StyleSheet, ViewStyle, StyleProp } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { Colors } from 'react-native-paper'
 
 type GridProps = {

@@ -1,6 +1,6 @@
 import { Subject } from '@models'
 import { FC } from 'react'
-import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 
 type SubjectProps = {
   style?: StyleProp<ViewStyle>

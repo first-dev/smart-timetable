@@ -1,9 +1,9 @@
-import { FC } from 'react'
-import { DrawerScreenProps } from '@react-navigation/drawer'
-import { DrawerParamList } from '@navigation/DrawerNavigator'
-import { Calendar } from 'react-native-calendars'
+import { Screen } from '@components/UI'
 import { MaterialIcons } from '@expo/vector-icons'
-import Screen from './Screen'
+import { DrawerParamList } from '@navigation/DrawerNavigator'
+import { DrawerScreenProps } from '@react-navigation/drawer'
+import { FC } from 'react'
+import { Calendar } from 'react-native-calendars'
 
 type Props = DrawerScreenProps<DrawerParamList, 'CalendarScreen'>
 

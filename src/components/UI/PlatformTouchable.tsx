@@ -1,6 +1,6 @@
 import { ComponentProps, FC } from 'react'
 import { Platform } from 'react-native'
-import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler'
 
 TouchableOpacity.defaultProps.activeOpacity = 0.8
 

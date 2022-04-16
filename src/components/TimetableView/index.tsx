@@ -1,10 +1,10 @@
-import { FC } from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { useDynamicWindowStyles } from '@hooks'
 import { Subject } from '@models'
 import { Timetable } from '@models/Timetable'
-import { useDynamicWindowStyles } from '@hooks'
-import Header from './Header'
+import { FC } from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import Body from './Body'
+import Header from './Header'
 import Sidebar from './Sidebar'
 
 type Props = {

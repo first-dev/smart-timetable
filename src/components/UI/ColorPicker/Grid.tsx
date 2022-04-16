@@ -1,7 +1,7 @@
 import { spacing as constSpacing } from '@constants'
 import { range } from 'lodash'
 import { FC, useState } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import EmptyItem from './EmptyItem'
 import Item from './Item'
 

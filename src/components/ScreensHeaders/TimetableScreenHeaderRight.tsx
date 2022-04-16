@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import type { HeaderOptions } from '@react-navigation/elements/lib/typescript/src/types'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { Menu, Divider } from 'react-native-paper'
 import { HeaderButton } from '@components/UI'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { AllParamsList } from '@navigation'
+import type { HeaderOptions } from '@react-navigation/elements/lib/typescript/src/types'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { useState } from 'react'
+import { Divider, Menu } from 'react-native-paper'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 const TimetableScreenHeaderRight: HeaderOptions['headerRight'] = () => {
   const [moreOptionsMenuVisible, setMoreOptionsMenuVisible] = useState(false)

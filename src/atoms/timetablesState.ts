@@ -1,10 +1,10 @@
-import { Timetable } from '@models/Timetable'
-import { atom, DefaultValue, MutableSnapshot, selector } from 'recoil'
 import { emptyTimetable } from '@constants/myTimetable'
+import { Timetable } from '@models/Timetable'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { persistAtom } from '@utils/storage'
 import { compile, parseTimetableState } from '@utils/timetable'
 import { cloneDeep, findIndex } from 'lodash'
-import { persistAtom } from '@utils/storage'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { atom, DefaultValue, MutableSnapshot, selector } from 'recoil'
 
 export type TimetablesStateType = {
   active: Timetable<'dynamic'>['id'] | null

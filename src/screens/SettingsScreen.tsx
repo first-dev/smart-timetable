@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 import { DrawerScreenProps } from '@react-navigation/drawer'
 
 import { DrawerParamList } from '@navigation/DrawerNavigator'
-import Screen from './Screen'
+import { Screen } from '@components/UI'
 
 type Props = DrawerScreenProps<DrawerParamList, 'SettingsScreen'>
 

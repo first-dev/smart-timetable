@@ -1,9 +1,9 @@
-import { ComponentProps, ReactNode } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
-import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
-import { useTheme, Text } from 'react-native-paper'
-import { spacing, fonts, colors } from '@constants'
 import Icon from '@components/UI/Icon'
+import { colors, fonts, spacing } from '@constants'
+import { ComponentProps, ReactNode } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { Text, useTheme } from 'react-native-paper'
 import PlatformTouchable from './PlatformTouchable'
 
 export type PickerProps<T = string> = {

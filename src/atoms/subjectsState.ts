@@ -1,9 +1,9 @@
-import { atom, DefaultValue, MutableSnapshot, selector } from 'recoil'
-import { Subject } from '@models'
 import { mySubjects } from '@constants/myTimetable'
-import { cloneDeep } from 'lodash'
-import { persistAtom } from '@utils/storage'
+import { Subject } from '@models'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { persistAtom } from '@utils/storage'
+import { cloneDeep } from 'lodash'
+import { atom, DefaultValue, MutableSnapshot, selector } from 'recoil'
 
 export const subjectsState = atom<Subject[]>({
   key: 'subjectsState',

@@ -1,7 +1,7 @@
-import { FC, Fragment } from 'react'
-import { View, StyleSheet, ViewStyle, StyleProp } from 'react-native'
 import { Subject } from '@models'
 import Day from '@models/Timetable/Day'
+import { FC, Fragment } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import Cell from './Cell'
 import EmptyCell from './EmptyCell'
 

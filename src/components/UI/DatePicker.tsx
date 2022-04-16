@@ -1,6 +1,6 @@
-import { FC, useState } from 'react'
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker'
 import { format, parseJSON } from 'date-fns'
+import { FC, useState } from 'react'
 import Icon from './Icon'
 import Picker, { PickerProps } from './Picker'
 

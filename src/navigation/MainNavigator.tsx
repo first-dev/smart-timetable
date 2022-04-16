@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import DrawerNavigator from './DrawerNavigator'
 import { NewSessionScreen, NewSubjectScreen } from '@screens'
+import DrawerNavigator from './DrawerNavigator'
 
 export type MainStackParamList = {
   DrawerNavigator: undefined

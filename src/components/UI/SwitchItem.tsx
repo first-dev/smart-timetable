@@ -1,6 +1,6 @@
 import { ComponentProps, FC, useState } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
-import { Switch, TouchableRipple, Text } from 'react-native-paper'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Switch, Text, TouchableRipple } from 'react-native-paper'
 
 type SwitchItemProps = ComponentProps<typeof Switch> & {
   label?: string

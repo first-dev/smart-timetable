@@ -1,7 +1,7 @@
-import { FC } from 'react'
-import { View, StyleSheet } from 'react-native'
 import { Subject } from '@models'
 import { Day } from '@models/Timetable'
+import { FC } from 'react'
+import { StyleSheet, View } from 'react-native'
 import Column from './Column'
 import Grid from './Grid'
 

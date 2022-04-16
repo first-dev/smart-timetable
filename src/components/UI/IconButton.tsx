@@ -1,5 +1,3 @@
-import { FC } from 'react'
-import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native'
 import {
   AntDesign,
   Entypo,
@@ -16,6 +14,8 @@ import {
   SimpleLineIcons,
   Zocial,
 } from '@expo/vector-icons'
+import { FC } from 'react'
+import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native'
 
 const Packs = {
   AntDesign,

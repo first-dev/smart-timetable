@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Dimensions, ScaledSize } from 'react-native'
 
 const useDynamicDimensions = (type: 'window' | 'screen') => {

@@ -8,7 +8,7 @@ import { MainStackParamList } from '@navigation/MainNavigator'
 import { SubjectsView } from '@components'
 import { useRecoilValue, useResetRecoilState } from 'recoil'
 import { subjectsState } from '@atoms/subjectsState'
-import Screen from './Screen'
+import { Screen } from '@components/UI'
 
 type Props = DrawerScreenProps<DrawerParamList & MainStackParamList, 'SubjectsScreen'>
 

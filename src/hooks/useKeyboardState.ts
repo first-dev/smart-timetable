@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Keyboard } from 'react-native'
 /**
  * @returns true if keyboard is shown, false otherwise

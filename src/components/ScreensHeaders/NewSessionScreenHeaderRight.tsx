@@ -1,8 +1,8 @@
-import type { HeaderOptions } from '@react-navigation/elements/lib/typescript/src/types'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { HeaderButton } from '@components/UI'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { AllParamsList } from '@navigation'
+import type { HeaderOptions } from '@react-navigation/elements/lib/typescript/src/types'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 const TimetableScreenHeaderRight: HeaderOptions['headerRight'] = () => {
   const { goBack } = useNavigation<NavigationProp<AllParamsList>>()

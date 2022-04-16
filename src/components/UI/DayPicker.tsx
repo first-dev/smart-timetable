@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
-import { Portal, Dialog, RadioButton } from 'react-native-paper'
+import { Dialog, Portal, RadioButton } from 'react-native-paper'
 import Icon from './Icon'
 import Picker, { PickerProps } from './Picker'
 

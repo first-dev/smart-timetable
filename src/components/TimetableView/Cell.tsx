@@ -1,8 +1,8 @@
-import { FC } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle, Text } from 'react-native'
+import { colors } from '@constants'
 import { Subject } from '@models'
 import Session from '@models/Timetable/Session'
-import { colors } from '@constants'
+import { FC } from 'react'
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { Colors } from 'react-native-paper'
 
 type CellProps = {

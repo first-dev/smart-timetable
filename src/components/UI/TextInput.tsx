@@ -1,10 +1,10 @@
 import fonts from '@constants/fonts'
-import { ComponentProps, FC } from 'react'
-import { View, StyleSheet, TextInput as NativeTextInput, Platform } from 'react-native'
-import { useTheme } from 'react-native-paper'
-import { MaterialIcons } from '@expo/vector-icons'
-import Icon from './Icon'
 import spacing from '@constants/spacing'
+import { MaterialIcons } from '@expo/vector-icons'
+import { ComponentProps, FC } from 'react'
+import { Platform, StyleSheet, TextInput as NativeTextInput, View } from 'react-native'
+import { useTheme } from 'react-native-paper'
+import Icon from './Icon'
 
 type Props = ComponentProps<typeof NativeTextInput> & {
   icon?: keyof typeof MaterialIcons['glyphMap']

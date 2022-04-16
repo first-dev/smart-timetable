@@ -1,15 +1,15 @@
-import { createDrawerNavigator } from '@react-navigation/drawer'
-import { colors } from '@constants'
 import { Content } from '@components/Drawer'
-import { useDynamicDimensions } from '@hooks'
 import { TimetableScreenHeaderRight } from '@components/ScreensHeaders'
+import { colors } from '@constants'
+import { useDynamicDimensions } from '@hooks'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import {
-  OverviewScreen,
-  TimetableScreen,
-  CalendarScreen,
   AgendaScreen,
-  SubjectsScreen,
+  CalendarScreen,
+  OverviewScreen,
   SettingsScreen,
+  SubjectsScreen,
+  TimetableScreen,
 } from '@screens'
 
 export type DrawerParamList = {
@@ -26,6 +26,7 @@ const Drawer = createDrawerNavigator<DrawerParamList>()
 const DrawerNavigator = () => {
   const { width } = useDynamicDimensions('window')
   const transformThreshold = 800
+
   return (
     <Drawer.Navigator
       initialRouteName="SubjectsScreen"
@@ -35,7 +36,7 @@ const DrawerNavigator = () => {
         headerTintColor: colors.primary,
         headerShadowVisible: false,
         drawerType: width > transformThreshold ? 'permanent' : 'front',
-        headerShown: width <= transformThreshold,
+        // headerShown: width <= transformThreshold,
         lazy: false,
       }}>
       <Drawer.Screen name="OverviewScreen" component={OverviewScreen} />

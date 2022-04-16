@@ -1,8 +1,8 @@
+import { Icon, Picker } from '@components/UI'
+import { Subject } from '@models'
 import { FC, useState } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
-import { Portal, Dialog, RadioButton } from 'react-native-paper'
-import { Subject } from '@models'
-import { Picker, Icon } from '@components/UI'
+import { Dialog, Portal, RadioButton } from 'react-native-paper'
 import { PickerProps } from './UI/Picker'
 
 type Props = PickerProps<string> & {

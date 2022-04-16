@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
 import { Colors } from 'react-native-paper'
 import tinycolor from 'tinycolor2'

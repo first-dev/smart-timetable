@@ -1,7 +1,7 @@
+import { colors } from '@constants'
+import { MaterialIcons } from '@expo/vector-icons'
 import { FC } from 'react'
 import { HeaderButton as DefaultHeaderButton } from 'react-navigation-header-buttons'
-import { MaterialIcons } from '@expo/vector-icons'
-import { colors } from '@constants'
 
 type HeaderButtonProps = DefaultHeaderButton['props']
 

@@ -1,6 +1,6 @@
 import { colors } from '@constants'
 import { FC } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Title } from 'react-native-paper'
 
 const Header: FC = () => {

@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { OptimizedHeavyScreen } from 'react-navigation-heavy-screen'
 import { View } from 'react-native'
+import { OptimizedHeavyScreen } from 'react-navigation-heavy-screen'
 
 type Props = {
   optimize?: boolean

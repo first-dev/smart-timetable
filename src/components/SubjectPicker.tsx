@@ -62,6 +62,6 @@ const SubjectPicker: FC<Props> = ({
 export default SubjectPicker
 const styles = StyleSheet.create({
   dialog: {
-    marginVertical: 200,
+    marginVertical: 100,
   },
 })

@@ -125,7 +125,7 @@ const ColorPicker: FC<Props> = ({
 export default ColorPicker
 const styles = StyleSheet.create({
   dialog: {
-    marginVertical: 200,
+    marginVertical: 100,
   },
   action: {
     justifyContent: 'space-between',

@@ -61,7 +61,7 @@ const NewSubjectScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
   })
 
   return (
-    <Screen>
+    <Screen scrollable>
       <Formik
         initialValues={{ name: '', color: '', room: '', teacher: '' } as Values}
         validationSchema={validationSchema}

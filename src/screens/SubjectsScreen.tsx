@@ -1,14 +1,13 @@
-import { FC, useState, useEffect } from 'react'
-import { DrawerScreenProps } from '@react-navigation/drawer'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { HeaderButton } from '@components/UI'
-import { Menu, Divider } from 'react-native-paper'
+import { subjectsState } from '@atoms/subjectsState'
+import { SubjectsView } from '@components'
+import { HeaderButton, Screen } from '@components/UI'
 import { DrawerParamList } from '@navigation/DrawerNavigator'
 import { MainStackParamList } from '@navigation/MainNavigator'
-import { SubjectsView } from '@components'
+import { DrawerScreenProps } from '@react-navigation/drawer'
+import { FC, useEffect, useState } from 'react'
+import { Divider, Menu } from 'react-native-paper'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { useRecoilValue, useResetRecoilState } from 'recoil'
-import { subjectsState } from '@atoms/subjectsState'
-import { Screen } from '@components/UI'
 
 type Props = DrawerScreenProps<DrawerParamList & MainStackParamList, 'SubjectsScreen'>
 

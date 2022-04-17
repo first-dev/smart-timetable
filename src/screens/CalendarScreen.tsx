@@ -9,7 +9,7 @@ type Props = DrawerScreenProps<DrawerParamList, 'CalendarScreen'>
 
 const CalendarScreen: FC<Props> = () => {
   return (
-    <Screen>
+    <Screen scrollable>
       <Calendar
         renderArrow={d => (
           <MaterialIcons name={`arrow-${d === 'left' ? 'back' : 'forward'}-ios`} size={18} />

@@ -1,15 +1,14 @@
+import { Screen } from '@components/UI'
+import { DrawerParamList } from '@navigation/DrawerNavigator'
+import { DrawerScreenProps } from '@react-navigation/drawer'
 import { FC } from 'react'
 import { Text } from 'react-native'
-import { DrawerScreenProps } from '@react-navigation/drawer'
-
-import { DrawerParamList } from '@navigation/DrawerNavigator'
-import { Screen } from '@components/UI'
 
 type Props = DrawerScreenProps<DrawerParamList, 'OverviewScreen'>
 
 const OverviewScreen: FC<Props> = () => {
   return (
-    <Screen>
+    <Screen scrollable>
       <Text>OverviewScreen</Text>
     </Screen>
   )

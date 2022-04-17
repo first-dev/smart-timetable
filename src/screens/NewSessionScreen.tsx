@@ -117,8 +117,9 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
       ['shelfLifeStart', 'shelfLifeEnd'],
     ],
   )
+
   return (
-    <Screen>
+    <Screen scrollable>
       <Formik
         initialValues={{} as Values}
         validationSchema={validationSchema}

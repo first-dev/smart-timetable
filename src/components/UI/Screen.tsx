@@ -1,16 +1,19 @@
 import { FC } from 'react'
-import { View } from 'react-native'
+import { ScrollView, StyleProp, View, ViewStyle } from 'react-native'
 import { OptimizedHeavyScreen } from 'react-navigation-heavy-screen'
 
 type Props = {
   optimize?: boolean
+  scrollable?: boolean
+  style?: StyleProp<ViewStyle>
 }
 
-const Screen: FC<Props> = ({ children, optimize = false }) => {
+const Screen: FC<Props> = ({ children, optimize = false, scrollable = false, style }) => {
+  const ParentView = scrollable ? ScrollView : View
   return (
-    <View style={{ flex: 1 }}>
+    <ParentView style={[{ flex: 1 }, style]}>
       {optimize ? <OptimizedHeavyScreen>{children}</OptimizedHeavyScreen> : children}
-    </View>
+    </ParentView>
   )
 }
 export default Screen

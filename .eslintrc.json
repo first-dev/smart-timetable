@@ -30,7 +30,8 @@
 
     "react-native/no-unused-styles": "warn",
     // "react-native/no-raw-text": "error",
-    "react-native/no-single-element-style-arrays": "warn"
+    "react-native/no-single-element-style-arrays": "warn",
+    "@typescript-eslint/ban-ts-comment": "off"
   },
   "ignorePatterns": ["**/electron/*.js"]
 }

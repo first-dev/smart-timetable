@@ -19,3 +19,5 @@ web-build/
 /web-build/*
 # electron-webpack
 /dist
+# yarn-error
+yarn-error.log

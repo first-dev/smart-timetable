@@ -1,10 +1,7 @@
-import { StatusBar } from 'expo-status-bar'
-import { View, StyleSheet, LogBox } from 'react-native'
-import { Providers } from '@utils'
 import { MainNavigator } from '@navigation'
-//TODO-remove
-import 'react-native-console-time-polyfill'
-LogBox.ignoreLogs(['timer'])
+import { Providers } from '@utils'
+import { StatusBar } from 'expo-status-bar'
+import { StyleSheet, View } from 'react-native'
 
 /*
 TODO-Features:

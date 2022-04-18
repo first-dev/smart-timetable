@@ -1,16 +1,32 @@
-import { FC, Suspense, useState } from 'react'
-import { RecoilRoot } from 'recoil'
-import {
-  NavigationContainer,
-  DefaultTheme as NavigationDefaultTheme,
-} from '@react-navigation/native'
-import { Provider as PaperProvider, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { colors } from '@constants'
-import LoadingIndicator from '@components/UI/LoadingIndicator'
-import { initializeTimetablesState } from '@atoms/timetablesState'
 import { initializeSubjectsState } from '@atoms/subjectsState'
+import { initializeTimetablesState } from '@atoms/timetablesState'
+import LoadingIndicator from '@components/UI/LoadingIndicator'
+import { colors } from '@constants'
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { useFlipper } from '@react-navigation/devtools'
+import {
+  DefaultTheme as NavigationDefaultTheme,
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native'
 import * as SplashScreen from 'expo-splash-screen'
+import { FC, Suspense, useState } from 'react'
+//@ts-ignore
+import { connectToDevTools } from 'react-devtools-core'
+import { LogBox } from 'react-native'
+import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper'
+import { RecoilRoot } from 'recoil'
+//@ts-ignore
+import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced'
+if (__DEV__) {
+  connectToDevTools({
+    host: 'localhost',
+    port: 8097,
+  })
+  //@ts-ignore
+  import('react-native-console-time-polyfill')
+}
+LogBox.ignoreLogs(['timer'])
 
 const paperTheme: typeof PaperDefaultTheme = {
   ...PaperDefaultTheme,
@@ -36,8 +52,12 @@ const navigationTheme: typeof NavigationDefaultTheme = {
 SplashScreen.preventAutoHideAsync()
 const Providers: FC = ({ children }) => {
   const [isInitialized, setIsInitialized] = useState(false)
+  const navigationRef = useNavigationContainerRef()
+  useFlipper(navigationRef)
+
   return (
     <>
+      <FlipperAsyncStorage />
       <PaperProvider
         theme={paperTheme}
         settings={{
@@ -59,7 +79,9 @@ const Providers: FC = ({ children }) => {
               SplashScreen.hideAsync()
             }}>
             {isInitialized && (
-              <NavigationContainer theme={navigationTheme}>{children}</NavigationContainer>
+              <NavigationContainer theme={navigationTheme} ref={navigationRef}>
+                {children}
+              </NavigationContainer>
             )}
           </RecoilRoot>
         </Suspense>

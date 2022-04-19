@@ -5,6 +5,14 @@
   "name": "SmartTimetable",
   "short_name": "SmartTimetable",
   "start_url": "/?utm_source=web_app_manifest",
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.firstdev.SmartTimetable",
+      "id": "com.firstdev.SmartTimetable"
+    }
+  ],
+  "prefer_related_applications": true,
   "icons": [
     {
       "src": "\\smart-timetable\\pwa\\chrome-icon\\chrome-icon-144.png",

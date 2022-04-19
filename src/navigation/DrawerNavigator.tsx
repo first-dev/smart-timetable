@@ -1,5 +1,4 @@
 import { Content } from '@components/Drawer'
-import { TimetableScreenHeaderRight } from '@components/ScreensHeaders'
 import { colors } from '@constants'
 import { useDynamicDimensions } from '@hooks'
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -40,13 +39,7 @@ const DrawerNavigator = () => {
         lazy: false,
       }}>
       <Drawer.Screen name="OverviewScreen" component={OverviewScreen} />
-      <Drawer.Screen
-        name="TimetableScreen"
-        component={TimetableScreen}
-        options={{
-          headerRight: TimetableScreenHeaderRight,
-        }}
-      />
+      <Drawer.Screen name="TimetableScreen" component={TimetableScreen} />
       <Drawer.Screen name="CalendarScreen" component={CalendarScreen} />
       <Drawer.Screen name="AgendaScreen" component={AgendaScreen} />
       <Drawer.Screen name="SubjectsScreen" component={SubjectsScreen} />

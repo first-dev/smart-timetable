@@ -12,8 +12,8 @@ export const subjectsState = atom<Subject[]>({
 })
 export const initializeSubjectsState = async ({ set }: MutableSnapshot) => {
   const savedValue = await AsyncStorage.getItem(subjectsState.key)
-  const value = savedValue != null ? JSON.parse(savedValue) : new DefaultValue()
-  value && set(subjectsState, value)
+  const value = savedValue != null ? JSON.parse(savedValue) : null
+  if (value) set(subjectsState, value)
 }
 
 export const addSubjectState = selector<Subject | undefined>({

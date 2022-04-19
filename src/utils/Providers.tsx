@@ -1,6 +1,3 @@
-import { initializeSubjectsState } from '@atoms/subjectsState'
-import { initializeTimetablesState } from '@atoms/timetablesState'
-import LoadingIndicator from '@components/UI/LoadingIndicator'
 import { colors } from '@constants'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { useFlipper } from '@react-navigation/devtools'
@@ -9,8 +6,8 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native'
-import * as SplashScreen from 'expo-splash-screen'
-import { FC, Suspense, useState } from 'react'
+import AppLoading from 'expo-app-loading'
+import { FC, Suspense } from 'react'
 //@ts-ignore
 import { connectToDevTools } from 'react-devtools-core'
 import { LogBox } from 'react-native'
@@ -49,9 +46,7 @@ const navigationTheme: typeof NavigationDefaultTheme = {
     border: 'transparent',
   },
 }
-SplashScreen.preventAutoHideAsync()
 const Providers: FC = ({ children }) => {
-  const [isInitialized, setIsInitialized] = useState(false)
   const navigationRef = useNavigationContainerRef()
   useFlipper(navigationRef)
 
@@ -68,21 +63,11 @@ const Providers: FC = ({ children }) => {
               return <MaterialCommunityIcons {...props} name={props.name as any} />
           },
         }}>
-        <Suspense fallback={<LoadingIndicator />}>
-          <RecoilRoot
-            initializeState={async mutableSnapshot => {
-              await Promise.all([
-                initializeTimetablesState(mutableSnapshot),
-                initializeSubjectsState(mutableSnapshot),
-              ])
-              setIsInitialized(true)
-              SplashScreen.hideAsync()
-            }}>
-            {isInitialized && (
-              <NavigationContainer theme={navigationTheme} ref={navigationRef}>
-                {children}
-              </NavigationContainer>
-            )}
+        <Suspense fallback={<AppLoading />}>
+          <RecoilRoot>
+            <NavigationContainer theme={navigationTheme} ref={navigationRef}>
+              {children}
+            </NavigationContainer>
           </RecoilRoot>
         </Suspense>
       </PaperProvider>

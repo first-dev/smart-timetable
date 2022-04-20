@@ -1,5 +1,5 @@
 import spacing from '@constants/spacing'
-import { uniq } from 'lodash'
+import { uniq, sortBy } from 'lodash'
 import { FC, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -15,11 +15,14 @@ type Color = {
 }
 type Props = PickerProps & {
   colors?: Color[]
+  defaultValue?: string
 }
-const defaultColors: Color[] = uniq(
-  Object.keys(Colors)
-    .map(s => s.replace(/[0-9]/g, ''))
-    .filter(s => !s.endsWith('A') && !['black', 'white', 'transparent'].includes(s)),
+const defaultColors: Color[] = sortBy(
+  uniq(
+    Object.keys(Colors)
+      .map(s => s.replace(/[0-9]/g, ''))
+      .filter(s => !s.endsWith('A') && !['black', 'white', 'transparent'].includes(s)),
+  ),
 ).map(colorName => ({
   main: Colors[`${colorName}500` as never],
   variants: [
@@ -36,20 +39,34 @@ const ColorPicker: FC<Props> = ({
   placeholder = 'Pick a color',
   onChange,
   colors = defaultColors,
+  defaultValue,
   ...rest
 }) => {
   const [visible, setVisible] = useState(false)
-  const [activeGridColorIndex, setActiveGridColorIndex] = useState<number>()
-  const [activeVariantColorIndex, setActiveVariantColorIndex] = useState<number>()
+  let defaultGridColorIndex = defaultValue
+    ? colors.findIndex(color => color.variants.includes(defaultValue))
+    : undefined
+  if (defaultGridColorIndex === -1) defaultGridColorIndex = undefined
+  let defaultVariantIndex =
+    defaultGridColorIndex &&
+    colors[defaultGridColorIndex]?.variants.findIndex(variant => variant === defaultValue)
+  if (defaultVariantIndex === -1) defaultVariantIndex = undefined
+  console.log(
+    `defaultGridColorIndex: ${defaultGridColorIndex} | defaultVariantIndex: ${defaultVariantIndex}`,
+  )
+  const [activeGridColorIndex, setActiveGridColorIndex] = useState(defaultGridColorIndex)
+  const [activeVariantColorIndex, setActiveVariantColorIndex] = useState(defaultVariantIndex)
+
+  const activeColor =
+    activeGridColorIndex != undefined && activeVariantColorIndex != undefined
+      ? colors[activeGridColorIndex].variants[activeVariantColorIndex]
+      : undefined
   const [value, setValue] = useState<{
     activeColor?: string
     activeGridColorIndex?: number
     activeVariantColorIndex?: number
-  }>({})
-  const activeColor =
-    activeGridColorIndex != undefined &&
-    activeVariantColorIndex != undefined &&
-    colors[activeGridColorIndex].variants[activeVariantColorIndex]
+  }>({ activeColor: activeColor ?? defaultValue, activeGridColorIndex, activeVariantColorIndex })
+
   const pressHandler = () => {
     setActiveGridColorIndex(value.activeGridColorIndex)
     setActiveVariantColorIndex(value.activeVariantColorIndex)

@@ -28,22 +28,42 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="SubjectsScreen"
+      initialRouteName="TimetableScreen"
       drawerContent={props => <Content {...props} />}
       useLegacyImplementation
       screenOptions={{
         headerTintColor: colors.primary,
         headerShadowVisible: false,
-        drawerType: width > transformThreshold ? 'permanent' : 'front',
+        drawerType: width > transformThreshold ? 'permanent' : undefined,
         // headerShown: width <= transformThreshold,
         lazy: false,
       }}>
-      <Drawer.Screen name="OverviewScreen" component={OverviewScreen} />
-      <Drawer.Screen name="TimetableScreen" component={TimetableScreen} />
-      <Drawer.Screen name="CalendarScreen" component={CalendarScreen} />
-      <Drawer.Screen name="AgendaScreen" component={AgendaScreen} />
-      <Drawer.Screen name="SubjectsScreen" component={SubjectsScreen} />
-      <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Drawer.Screen
+        name="OverviewScreen"
+        component={OverviewScreen}
+        options={{ title: 'Overview' }}
+      />
+      <Drawer.Screen
+        name="TimetableScreen"
+        component={TimetableScreen}
+        options={{ title: 'Timetable' }}
+      />
+      <Drawer.Screen
+        name="CalendarScreen"
+        component={CalendarScreen}
+        options={{ title: 'Calendar' }}
+      />
+      <Drawer.Screen name="AgendaScreen" component={AgendaScreen} options={{ title: 'Agenda' }} />
+      <Drawer.Screen
+        name="SubjectsScreen"
+        component={SubjectsScreen}
+        options={{ title: 'Subjects' }}
+      />
+      <Drawer.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{ title: 'Settings' }}
+      />
     </Drawer.Navigator>
   )
 }

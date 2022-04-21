@@ -4,39 +4,32 @@ import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-nav
 import { FC, Fragment } from 'react'
 import { StyleSheet } from 'react-native'
 import { Colors, Divider, Drawer } from 'react-native-paper'
+import { IconSource } from 'react-native-paper/lib/typescript/components/Icon'
 import Header from './Header'
 
-const getIcon = (name: keyof DrawerParamList) => {
-  switch (name) {
-    case 'OverviewScreen':
-      return 'home'
-    case 'TimetableScreen':
-      return 'timetable'
-    case 'CalendarScreen':
-      return 'calendar-today'
-    case 'AgendaScreen':
-      return 'view-agenda'
-    case 'SubjectsScreen':
-      return 'school'
-    case 'SettingsScreen':
-      return 'settings'
-  }
+const icons: Record<keyof DrawerParamList, IconSource> = {
+  OverviewScreen: 'home',
+  TimetableScreen: 'timetable',
+  CalendarScreen: 'calendar-today',
+  AgendaScreen: 'view-agenda',
+  SubjectsScreen: 'school',
+  SettingsScreen: 'settings',
 }
 
-const Content: FC<DrawerContentComponentProps> = props => {
+const Content: FC<DrawerContentComponentProps> = ({ navigation, descriptors, state }) => {
   return (
     <DrawerContentScrollView style={styles.container}>
       <Header />
       <Divider style={styles.divider} />
-      {props.state.routes.map(({ key, name }) => (
+      {state.routes.map(({ key, name }) => (
         <Fragment key={key}>
           {name === 'AgendaScreen' && <Divider style={styles.divider} />}
           <Drawer.Item
             style={styles.item}
-            label={name}
-            icon={getIcon(name as any)}
-            onPress={() => props.navigation.navigate(name)}
-            active={props.descriptors[key].navigation.isFocused()}
+            label={descriptors[key].options.title ?? name}
+            icon={icons[name as never]}
+            onPress={() => navigation.navigate(name)}
+            active={descriptors[key].navigation.isFocused()}
             theme={{
               colors: {
                 text: colors.blackFont,

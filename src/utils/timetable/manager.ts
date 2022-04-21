@@ -9,7 +9,7 @@ export const parseTimetableState = (text: string): TimetablesStateType | null =>
   })
 }
 
-export const addSession = (
+export const addSessionToTimetable = (
   timetable: Timetable<'dynamic'>,
   session: Session<'dynamic'>,
 ): Timetable<'dynamic'> => {

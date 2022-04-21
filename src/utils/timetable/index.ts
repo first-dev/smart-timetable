@@ -1,2 +1,2 @@
 export { compile } from './compiler'
-export { addSession, parseTimetableState } from './manager'
+export { addSessionToTimetable, parseTimetableState } from './manager'

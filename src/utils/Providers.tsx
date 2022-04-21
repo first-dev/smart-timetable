@@ -1,20 +1,17 @@
-import { colors } from '@constants'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { useFlipper } from '@react-navigation/devtools'
-import {
-  DefaultTheme as NavigationDefaultTheme,
-  NavigationContainer,
-  useNavigationContainerRef,
-} from '@react-navigation/native'
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native'
+import { navigationTheme, paperTheme } from '@utils/theme'
 import AppLoading from 'expo-app-loading'
 import { FC, Suspense } from 'react'
 //@ts-ignore
 import { connectToDevTools } from 'react-devtools-core'
 import { LogBox } from 'react-native'
-import { DefaultTheme as PaperDefaultTheme, Provider as PaperProvider } from 'react-native-paper'
+import { Provider as PaperProvider } from 'react-native-paper'
 import { RecoilRoot } from 'recoil'
 //@ts-ignore
 import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced'
+
 if (__DEV__) {
   connectToDevTools({
     host: 'localhost',
@@ -25,27 +22,6 @@ if (__DEV__) {
 }
 LogBox.ignoreLogs(['timer'])
 
-const paperTheme: typeof PaperDefaultTheme = {
-  ...PaperDefaultTheme,
-  colors: {
-    ...PaperDefaultTheme.colors,
-    primary: colors.primary,
-    accent: colors.accent,
-    text: colors.text,
-    placeholder: colors.faintText,
-    error: colors.error,
-  },
-}
-const navigationTheme: typeof NavigationDefaultTheme = {
-  ...NavigationDefaultTheme,
-  colors: {
-    ...NavigationDefaultTheme.colors,
-    primary: colors.primary,
-    text: colors.primary,
-    background: 'white',
-    border: 'transparent',
-  },
-}
 const Providers: FC = ({ children }) => {
   const navigationRef = useNavigationContainerRef()
   useFlipper(navigationRef)

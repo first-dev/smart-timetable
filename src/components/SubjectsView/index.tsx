@@ -5,9 +5,10 @@ import Item from './Item'
 
 type Props = {
   subjects: Subject[]
+  onItemPress?: (subjectId: string) => void
 }
 
-const SubjectsView: FC<Props> = ({ subjects }) => {
+const SubjectsView: FC<Props> = ({ subjects, onItemPress }) => {
   const [width, setWidth] = useState(Dimensions.get('window').width)
   const numColumns = Math.round(width / 250) || 1
   return (
@@ -17,7 +18,13 @@ const SubjectsView: FC<Props> = ({ subjects }) => {
         key={numColumns}
         numColumns={numColumns}
         data={subjects}
-        renderItem={({ item }) => <Item subject={item} style={{ flex: 1 / numColumns }} />}
+        renderItem={({ item }) => (
+          <Item
+            subject={item}
+            style={{ flex: 1 / numColumns }}
+            onPress={() => onItemPress?.(item.id)}
+          />
+        )}
         onLayout={({
           nativeEvent: {
             layout: { width },

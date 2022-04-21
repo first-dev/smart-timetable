@@ -51,9 +51,6 @@ const ColorPicker: FC<Props> = ({
     defaultGridColorIndex &&
     colors[defaultGridColorIndex]?.variants.findIndex(variant => variant === defaultValue)
   if (defaultVariantIndex === -1) defaultVariantIndex = undefined
-  console.log(
-    `defaultGridColorIndex: ${defaultGridColorIndex} | defaultVariantIndex: ${defaultVariantIndex}`,
-  )
   const [activeGridColorIndex, setActiveGridColorIndex] = useState(defaultGridColorIndex)
   const [activeVariantColorIndex, setActiveVariantColorIndex] = useState(defaultVariantIndex)
 

@@ -1,110 +1,59 @@
-import { addSubjectState } from '@atoms/subjectsState'
-import { HeaderButton, Screen, TextInput } from '@components/UI'
-import ColorPicker from '@components/UI/ColorPicker'
+import SubjectForm, { SubjectFormValues } from '@components/SubjectForm'
+import { HeaderButton, Screen } from '@components/UI'
+import useSubjectsState from '@hooks/useSubjectsState'
 import { MainStackParamList } from '@navigation/MainNavigator'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Formik, FormikProps, FormikValues } from 'formik'
+import { FormikProps, FormikValues } from 'formik'
 import { FC, useCallback, useEffect, useRef } from 'react'
-import { Divider } from 'react-native-paper'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { useRecoilState } from 'recoil'
-import * as Yup from 'yup'
 
 type Props = NativeStackScreenProps<MainStackParamList, 'NewSubjectScreen'>
-type Values = {
-  name?: string
-  color?: string
-  teacher?: string
-  room?: string
-}
 
-const NewSubjectScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => {
-  const [, setAddSubjectState] = useRecoilState(addSubjectState)
+const NewSubjectScreen: FC<Props> = ({
+  navigation: { setOptions, goBack, navigate },
+  route: { params },
+}) => {
+  const { action, subjectId } = params
+  const isEdit = action === 'edit'
+  const { addSubject, getSubjectById, editSubject } = useSubjectsState()
   const formRef = useRef<FormikProps<FormikValues>>(null)
+  const subject = isEdit && subjectId ? getSubjectById(subjectId) : undefined
+  const initialValues = isEdit ? subject : undefined
   useEffect(() => {
     setOptions({
+      headerTitle: isEdit ? subject?.name : undefined,
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item title="Add new subject" iconName="done" onPress={formRef.current?.handleSubmit} />
+          <Item title="Add new subject" iconName="done" onPress={formRef.current?.submitForm} />
         </HeaderButtons>
       ),
     })
-  }, [setOptions])
-  const addSubjectHandler = useCallback<(values: Values) => void>(
+  }, [isEdit, setOptions, subject?.name])
+  const addSubjectHandler = useCallback<(values: SubjectFormValues) => void>(
     ({ name, color, teacher, room }) => {
       if (name && color) {
-        setAddSubjectState({
+        const subject = {
           name: name.trim(),
           color,
           teacher: teacher?.trim(),
           room: room?.trim(),
           id: name,
-        })
-        goBack()
+        }
+        if (action === 'new') {
+          addSubject(subject)
+          goBack()
+        } else if (subjectId) {
+          editSubject(subjectId, subject)
+          navigate('SubjectDetailsScreen', { subjectId })
+        }
       }
     },
-    [goBack, setAddSubjectState],
+    [action, addSubject, editSubject, goBack, navigate, subjectId],
   )
-  const validationSchema = Yup.object({
-    name: Yup.string()
-      .required()
-      .matches(/(?!\s*$)/),
-    color: Yup.string()
-      .required()
-      .matches(/^#[0-9a-fA-f]{6}$/g),
-    teacher: Yup.string()
-      .optional()
-      .matches(/(?!\s*$)/),
-    room: Yup.string()
-      .optional()
-      .matches(/(?!\s*$)/),
-  })
 
   return (
     <Screen scrollable>
-      <Formik
-        initialValues={{ name: '', color: '', room: '', teacher: '' } as Values}
-        validationSchema={validationSchema}
-        onSubmit={addSubjectHandler}
-        validateOnChange={false}
-        validateOnBlur={false}
-        innerRef={formRef}>
-        {({ values, errors, handleChange }) => (
-          <>
-            <Divider />
-            <TextInput
-              value={values.name}
-              onChangeText={handleChange('name')}
-              placeholder="Add a name"
-              icon="title"
-              error={!!errors.name}
-            />
-            <Divider />
-            <ColorPicker
-              error={!!errors.color}
-              onChange={handleChange('color')}
-              placeholder="Pick a color"
-            />
-            <Divider />
-            <TextInput
-              value={values.room}
-              onChangeText={handleChange('room')}
-              placeholder="Add a room"
-              icon="room"
-              error={!!errors.room}
-            />
-            <Divider />
-            <TextInput
-              value={values.teacher}
-              onChangeText={handleChange('teacher')}
-              placeholder="Add a teacher"
-              icon="person"
-              error={!!errors.teacher}
-            />
-            <Divider />
-          </>
-        )}
-      </Formik>
+      <SubjectForm ref={formRef} onSubmit={addSubjectHandler} initialValues={initialValues} />
     </Screen>
   )
 }

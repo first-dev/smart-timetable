@@ -12,22 +12,48 @@ export const myTimetable: Timetable<'dynamic'> = {
   sessions: [
     {
       dayIndex: 1,
-      subjectId: 'M9',
-      start: 8,
-      end: 12,
+      subjectId: 'M11-1',
+      start: 8.5,
+      end: 12.5,
       shelfLife: {
-        start: new Date(2022, 1, 1),
-        end: new Date(2023, 1, 1),
+        start: null,
+        end: null,
       },
     },
     {
-      dayIndex: 3,
+      dayIndex: 1,
       subjectId: 'M12-1',
-      start: 8,
-      end: 12,
+      start: 14.5,
+      end: 18.5,
       shelfLife: {
-        start: new Date(2022, 1, 1),
-        end: new Date(2023, 1, 1),
+        start: null,
+        end: null,
+      },
+    },
+  ],
+}
+
+export const myTimetable2: Timetable<'dynamic'> = {
+  id: 'S1',
+  sessions: [
+    {
+      dayIndex: 1,
+      subjectId: 'M10',
+      start: 8.5,
+      end: 10.5,
+      shelfLife: {
+        start: null,
+        end: null,
+      },
+    },
+    {
+      dayIndex: 1,
+      subjectId: 'M8',
+      start: 14.5,
+      end: 16.5,
+      shelfLife: {
+        start: null,
+        end: null,
       },
     },
   ],
@@ -38,21 +64,21 @@ export const mySubjects: Subject[] = [
     id: 'M11-1',
     name: 'CAO',
     room: 'Salle1',
-    color: Colors.purple400,
+    color: Colors.purple500,
     teacher: 'Y. FARHANE',
   },
   {
     id: 'M12-1',
     name: 'Circuits reprogrammables',
     room: 'Salle1',
-    color: Colors.red400,
+    color: Colors.red500,
     teacher: 'A. MANSOURI',
   },
   {
     id: 'M12-2',
     name: 'Conception des C.I par langage VHDL',
     room: 'Salle1',
-    color: Colors.cyan400,
+    color: Colors.cyan500,
     teacher: 'A. MANSOURI',
   },
   {
@@ -66,14 +92,14 @@ export const mySubjects: Subject[] = [
     id: 'M16-1',
     name: 'Anglais',
     room: 'Salle1',
-    color: Colors.teal400,
+    color: Colors.teal500,
     teacher: 'DAHBI',
   },
   {
     id: 'M16-2',
     name: 'TEC2',
     room: 'Salle1',
-    color: Colors.brown400,
+    color: Colors.brown500,
     teacher: 'KHADIJA ALAOUI',
   },
   {
@@ -87,7 +113,7 @@ export const mySubjects: Subject[] = [
     id: 'M13-2',
     name: 'Automate programmable API',
     room: 'Salle1',
-    color: Colors.blue400,
+    color: Colors.blue500,
     teacher: 'A.ELBDOURI',
   },
   {
@@ -122,7 +148,7 @@ export const mySubjects: Subject[] = [
     id: 'M15-2',
     name: 'Droit des sociétés',
     room: 'Salle1',
-    color: Colors.lightBlue400,
+    color: Colors.lightBlue500,
     teacher: 'BOULAICH',
   },
   {

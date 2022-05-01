@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/smart-timetable/static/js/app.b5252465.chunk.js",
-    "app.js.map": "/smart-timetable/static/js/app.b5252465.chunk.js.map",
+    "app.js": "/smart-timetable/static/js/app.61eefa0d.chunk.js",
+    "app.js.map": "/smart-timetable/static/js/app.61eefa0d.chunk.js.map",
     "runtime~app.js": "/smart-timetable/static/js/runtime~app.2f291264.js",
     "runtime~app.js.map": "/smart-timetable/static/js/runtime~app.2f291264.js.map",
-    "static/js/2.a97f4908.chunk.js": "/smart-timetable/static/js/2.a97f4908.chunk.js",
-    "static/js/2.a97f4908.chunk.js.map": "/smart-timetable/static/js/2.a97f4908.chunk.js.map",
+    "static/js/2.9b2ea5db.chunk.js": "/smart-timetable/static/js/2.9b2ea5db.chunk.js",
+    "static/js/2.9b2ea5db.chunk.js.map": "/smart-timetable/static/js/2.9b2ea5db.chunk.js.map",
     "fonts/AntDesign.ttf": "/smart-timetable/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/smart-timetable/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/smart-timetable/./fonts/Feather.ttf",
@@ -17,6 +17,24 @@
     "fonts/Ionicons.ttf": "/smart-timetable/./fonts/Ionicons.ttf",
     "fonts/MaterialCommunityIcons.ttf": "/smart-timetable/./fonts/MaterialCommunityIcons.ttf",
     "fonts/MaterialIcons.ttf": "/smart-timetable/./fonts/MaterialIcons.ttf",
+    "fonts/Poppins_100Thin.ttf": "/smart-timetable/./fonts/Poppins_100Thin.ttf",
+    "fonts/Poppins_100Thin_Italic.ttf": "/smart-timetable/./fonts/Poppins_100Thin_Italic.ttf",
+    "fonts/Poppins_200ExtraLight.ttf": "/smart-timetable/./fonts/Poppins_200ExtraLight.ttf",
+    "fonts/Poppins_200ExtraLight_Italic.ttf": "/smart-timetable/./fonts/Poppins_200ExtraLight_Italic.ttf",
+    "fonts/Poppins_300Light.ttf": "/smart-timetable/./fonts/Poppins_300Light.ttf",
+    "fonts/Poppins_300Light_Italic.ttf": "/smart-timetable/./fonts/Poppins_300Light_Italic.ttf",
+    "fonts/Poppins_400Regular.ttf": "/smart-timetable/./fonts/Poppins_400Regular.ttf",
+    "fonts/Poppins_400Regular_Italic.ttf": "/smart-timetable/./fonts/Poppins_400Regular_Italic.ttf",
+    "fonts/Poppins_500Medium.ttf": "/smart-timetable/./fonts/Poppins_500Medium.ttf",
+    "fonts/Poppins_500Medium_Italic.ttf": "/smart-timetable/./fonts/Poppins_500Medium_Italic.ttf",
+    "fonts/Poppins_600SemiBold.ttf": "/smart-timetable/./fonts/Poppins_600SemiBold.ttf",
+    "fonts/Poppins_600SemiBold_Italic.ttf": "/smart-timetable/./fonts/Poppins_600SemiBold_Italic.ttf",
+    "fonts/Poppins_700Bold.ttf": "/smart-timetable/./fonts/Poppins_700Bold.ttf",
+    "fonts/Poppins_700Bold_Italic.ttf": "/smart-timetable/./fonts/Poppins_700Bold_Italic.ttf",
+    "fonts/Poppins_800ExtraBold.ttf": "/smart-timetable/./fonts/Poppins_800ExtraBold.ttf",
+    "fonts/Poppins_800ExtraBold_Italic.ttf": "/smart-timetable/./fonts/Poppins_800ExtraBold_Italic.ttf",
+    "fonts/Poppins_900Black.ttf": "/smart-timetable/./fonts/Poppins_900Black.ttf",
+    "fonts/Poppins_900Black_Italic.ttf": "/smart-timetable/./fonts/Poppins_900Black_Italic.ttf",
     "fonts/SimpleLineIcons.ttf": "/smart-timetable/./fonts/SimpleLineIcons.ttf",
     "favicon-16.png": "/smart-timetable/favicon-16.png",
     "favicon-32.png": "/smart-timetable/favicon-32.png",
@@ -24,11 +42,11 @@
     "index.html": "/smart-timetable/index.html",
     "manifest.json": "/smart-timetable/manifest.json",
     "serve.json": "/smart-timetable/serve.json",
-    "static/js/2.a97f4908.chunk.js.LICENSE.txt": "/smart-timetable/static/js/2.a97f4908.chunk.js.LICENSE.txt"
+    "static/js/2.9b2ea5db.chunk.js.LICENSE.txt": "/smart-timetable/static/js/2.9b2ea5db.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.2f291264.js",
-    "static/js/2.a97f4908.chunk.js",
-    "static/js/app.b5252465.chunk.js"
+    "static/js/2.9b2ea5db.chunk.js",
+    "static/js/app.61eefa0d.chunk.js"
   ]
 }

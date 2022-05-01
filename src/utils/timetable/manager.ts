@@ -17,3 +17,29 @@ export const addSessionToTimetable = (
   clone.sessions.push(session)
   return clone
 }
+
+export const deleteSessionFromTimetable = (
+  timetable: Timetable<'dynamic'>,
+  sessionId: Session<'dynamic'>['id'],
+): Timetable<'dynamic'> => {
+  const clone = cloneDeep(timetable)
+  clone.sessions = clone.sessions.filter(session => session.id !== sessionId)
+  return clone
+}
+
+export const editSessionInTimetable = (
+  timetable: Timetable<'dynamic'>,
+  sessionId: Session<'dynamic'>['id'],
+  newSession: Omit<Session<'dynamic'>, 'id'>,
+): Timetable<'dynamic'> => {
+  const clone = cloneDeep(timetable)
+  const oldSession = clone.sessions.find(session => session.id === sessionId)
+  if (oldSession) {
+    oldSession.subjectId = newSession.subjectId
+    oldSession.dayIndex = newSession.dayIndex
+    oldSession.start = newSession.start
+    oldSession.end = newSession.end
+    oldSession.shelfLife = newSession.shelfLife
+  }
+  return clone
+}

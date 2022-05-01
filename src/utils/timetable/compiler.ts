@@ -2,7 +2,8 @@ import { Timetable, Day } from '@models/Timetable'
 import { isWithinInterval } from 'date-fns'
 import { range } from 'lodash'
 
-export const compile = ({ id, sessions }: Timetable<'dynamic'>): Timetable<'static'> => ({
+export const compile = ({ title, id, sessions }: Timetable<'dynamic'>): Timetable<'static'> => ({
+  title,
   id,
   days: range(1, 6).map(i =>
     compileDay({ index: i, sessions: sessions.filter(({ dayIndex }) => dayIndex === i) }),
@@ -17,7 +18,8 @@ const compileDay = ({ index, sessions }: Day<'dynamic'>): Day<'static'> => ({
         end: end != null ? end : 1e15,
       }),
     )
-    .map(({ start, end, subjectId }) => ({
+    .map(({ id, start, end, subjectId }) => ({
+      id,
       start,
       end,
       subjectId,

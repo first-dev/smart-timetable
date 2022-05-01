@@ -11,6 +11,13 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import { RecoilRoot } from 'recoil'
 //@ts-ignore
 import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced'
+import {
+  useFonts,
+  Poppins_200ExtraLight,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_100Thin,
+} from '@expo-google-fonts/poppins'
 
 if (__DEV__) {
   connectToDevTools({
@@ -25,7 +32,16 @@ LogBox.ignoreLogs(['timer'])
 const Providers: FC = ({ children }) => {
   const navigationRef = useNavigationContainerRef()
   useFlipper(navigationRef)
+  const [fontsLoaded] = useFonts({
+    Poppins_200ExtraLight,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_100Thin,
+  })
 
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
   return (
     <>
       <FlipperAsyncStorage />

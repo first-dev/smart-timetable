@@ -11,6 +11,12 @@ export const paperTheme: typeof PaperDefaultTheme = {
     placeholder: colors.faintText,
     error: colors.error,
   },
+  fonts: {
+    regular: { fontFamily: 'Poppins_400Regular', fontWeight: 'normal' },
+    light: { fontFamily: 'Poppins_200ExtraLight', fontWeight: 'normal' },
+    medium: { fontFamily: 'Poppins_500Medium', fontWeight: 'normal' },
+    thin: { fontFamily: 'Poppins_200Extra', fontWeight: 'normal' },
+  },
 }
 export const navigationTheme: typeof NavigationDefaultTheme = {
   ...NavigationDefaultTheme,

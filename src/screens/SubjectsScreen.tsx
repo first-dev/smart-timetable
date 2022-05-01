@@ -1,20 +1,17 @@
-import { subjectsState } from '@atoms/subjectsState'
 import { SubjectsView } from '@components'
 import { HeaderButton, Screen } from '@components/UI'
+import { MoreMenu } from '@components/UI/HeaderButtons'
+import useSubjectsState from '@hooks/useSubjectsState'
 import { DrawerParamList } from '@navigation/DrawerNavigator'
 import { MainStackParamList } from '@navigation/MainNavigator'
 import { DrawerScreenProps } from '@react-navigation/drawer'
-import { FC, useEffect, useState } from 'react'
-import { Divider, Menu } from 'react-native-paper'
+import { FC, useCallback, useEffect } from 'react'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { useRecoilValue, useResetRecoilState } from 'recoil'
 
 type Props = DrawerScreenProps<DrawerParamList & MainStackParamList, 'SubjectsScreen'>
 
 const SubjectsScreen: FC<Props> = ({ navigation: { setOptions, navigate } }) => {
-  const [optionsMenuVisible, setOptionsMenuVisible] = useState(false)
-  const subjects = useRecoilValue(subjectsState)
-  const resetState = useResetRecoilState(subjectsState)
+  const { subjects, resetState } = useSubjectsState()
   useEffect(() => {
     setOptions({
       headerRight: () => (
@@ -22,30 +19,24 @@ const SubjectsScreen: FC<Props> = ({ navigation: { setOptions, navigate } }) => 
           <Item
             title="Add new session"
             iconName={'add'}
-            onPress={() => navigate('NewSubjectScreen')}
+            onPress={() => navigate('NewSubjectScreen', { action: 'new' })}
           />
-          <Menu
-            visible={optionsMenuVisible}
-            onDismiss={() => setOptionsMenuVisible(false)}
-            anchor={
-              <Item
-                title="Options"
-                iconName={'more-vert'}
-                onPress={() => setOptionsMenuVisible(true)}
-              />
-            }>
-            <Menu.Item onPress={resetState} title="Reset" />
-            <Menu.Item onPress={() => console.log(`Item 2 pressed`)} title="Item 2" />
-            <Divider />
-            <Menu.Item onPress={() => console.log(`Item 3 pressed`)} title="Item 3" />
-          </Menu>
+          <MoreMenu>
+            <MoreMenu.Item onPress={resetState} title="Reset" />
+          </MoreMenu>
         </HeaderButtons>
       ),
     })
-  }, [navigate, optionsMenuVisible, resetState, setOptions])
+  }, [navigate, resetState, setOptions])
+  const itemPressHandler = useCallback(
+    (subjectId: string) => {
+      navigate('SubjectDetailsScreen', { subjectId })
+    },
+    [navigate],
+  )
   return (
     <Screen>
-      <SubjectsView subjects={subjects} />
+      <SubjectsView subjects={subjects} onItemPress={itemPressHandler} />
     </Screen>
   )
 }

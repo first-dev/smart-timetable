@@ -1,16 +1,14 @@
-import { subjectsState } from '@atoms/subjectsState'
-import { activeTimetableState } from '@atoms/timetablesState'
 import { SubjectPicker } from '@components'
 import { DatePicker, DayPicker, HeaderButton, Screen, Space, TimePicker } from '@components/UI'
+import { useSubjectsState, useTimetablesState } from '@hooks'
 import { MainStackParamList } from '@navigation/MainNavigator'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { addSession } from '@utils/timetable'
-import { compareAsc, parseJSON } from 'date-fns'
+import { compareAsc, hoursToMinutes, parseJSON } from 'date-fns'
 import { Formik, FormikProps, FormikValues } from 'formik'
 import { FC, useCallback, useEffect, useRef } from 'react'
 import { Divider } from 'react-native-paper'
+import uuid from 'react-native-uuid'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import * as Yup from 'yup'
 
 type Props = NativeStackScreenProps<MainStackParamList, 'NewSessionScreen'>
@@ -23,10 +21,13 @@ type Values = {
   shelfLifeEnd?: string
 }
 
-const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => {
-  const [, setActiveTimetable] = useRecoilState(activeTimetableState)
-  const subjects = useRecoilValue(subjectsState)
-  const addSessionHandler = useCallback<(values: Values) => void>(
+const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack }, route: { params } }) => {
+  const { action, sessionId } = params
+  const { getSessionById, editSession } = useTimetablesState()
+  const session = action === 'edit' && sessionId ? getSessionById(sessionId) : undefined
+  const { addSession } = useTimetablesState()
+  const { subjects } = useSubjectsState()
+  const formSubmitHandler = useCallback<(values: Values) => void>(
     ({ subjectId, dayIndex, start, end, shelfLifeStart, shelfLifeEnd }) => {
       if (
         dayIndex != undefined &&
@@ -36,24 +37,26 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
       ) {
         const startDate = parseJSON(start)
         const endDate = parseJSON(end)
-        setActiveTimetable(
-          currentActiveTimetable =>
-            currentActiveTimetable &&
-            addSession(currentActiveTimetable, {
-              dayIndex: parseInt(dayIndex),
-              subjectId,
-              start: startDate.getHours() + startDate.getMinutes() / 60,
-              end: endDate.getHours() + endDate.getMinutes() / 60,
-              shelfLife: {
-                start: shelfLifeStart ? parseJSON(shelfLifeStart) : null,
-                end: shelfLifeEnd ? parseJSON(shelfLifeEnd) : null,
-              },
-            }),
-        )
+        const convertedValues = {
+          dayIndex: parseInt(dayIndex),
+          subjectId,
+          start: startDate.getHours() + startDate.getMinutes() / 60,
+          end: endDate.getHours() + endDate.getMinutes() / 60,
+          shelfLife: {
+            start: shelfLifeStart ? parseJSON(shelfLifeStart) : null,
+            end: shelfLifeEnd ? parseJSON(shelfLifeEnd) : null,
+          },
+        }
+        if (action === 'edit' && sessionId) editSession(sessionId, convertedValues)
+        else
+          addSession({
+            id: uuid.v4(),
+            ...convertedValues,
+          })
       }
       goBack()
     },
-    [goBack, setActiveTimetable],
+    [action, addSession, editSession, goBack, sessionId],
   )
   const formRef = useRef<FormikProps<FormikValues>>(null)
   useEffect(() => {
@@ -117,13 +120,26 @@ const NewSessionScreen: FC<Props> = ({ navigation: { setOptions, goBack } }) => 
       ['shelfLifeStart', 'shelfLifeEnd'],
     ],
   )
+  const initialValuesTimeParser = (date: number) =>
+    new Date(0, 0, 0, date, hoursToMinutes(date - Math.floor(date))).toISOString()
+  const initialValues: Values =
+    session != undefined
+      ? {
+          subjectId: session.subjectId,
+          dayIndex: session.dayIndex.toString(),
+          start: initialValuesTimeParser(session.start),
+          end: initialValuesTimeParser(session.end),
+          shelfLifeStart: session.shelfLife.start?.toISOString(),
+          shelfLifeEnd: session.shelfLife.end?.toISOString(),
+        }
+      : {}
 
   return (
     <Screen scrollable>
       <Formik
-        initialValues={{} as Values}
+        initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={addSessionHandler}
+        onSubmit={formSubmitHandler}
         validateOnBlur={false}
         validateOnChange={false}
         innerRef={formRef}>

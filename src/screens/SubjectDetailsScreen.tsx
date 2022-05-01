@@ -1,12 +1,12 @@
-import { HeaderButton, Icon, Screen, Space } from '@components/UI'
+import { ConfirmationDialog, HeaderButton, Icon, Screen, Space } from '@components/UI'
 import { MoreMenu } from '@components/UI/HeaderButtons'
-import { colors, fonts, spacing } from '@constants'
+import { fonts, spacing } from '@constants'
 import { useSubjectsState } from '@hooks'
 import { MainStackParamList } from '@navigation/MainNavigator'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { FC, useCallback, useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Button, Dialog, Divider, Portal, Text, Title } from 'react-native-paper'
+import { Divider, Text, Title } from 'react-native-paper'
 import { HeaderButtons } from 'react-navigation-header-buttons'
 
 type Props = NativeStackScreenProps<MainStackParamList, 'SubjectDetailsScreen'>
@@ -62,26 +62,18 @@ const SubjectDetailsScreen: FC<Props> = ({
       <Space height={200} bottomDivider />
       <Title style={styles.title}>Upcoming events</Title>
       <Space height={200} />
-      <Portal>
-        <Dialog
-          style={styles.dialog}
-          visible={deleteDialogVisible}
-          onDismiss={() => setDeleteDialogVisible(false)}>
-          <Dialog.Title>Delete Subject</Dialog.Title>
-          <Dialog.Content>
-            <Text>
-              Are you sure you want to delete{' '}
-              <Text style={{ fontWeight: 'bold' }}>{subject.name}</Text>?
-            </Text>
-          </Dialog.Content>
-          <Dialog.Actions style={styles.actions}>
-            <Button color={colors.error} onPress={deleteHandler}>
-              Delete
-            </Button>
-            <Button onPress={() => setDeleteDialogVisible(false)}>Cancel</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      <ConfirmationDialog
+        title="Delete subject"
+        deleteButton
+        style={styles.dialog}
+        visible={deleteDialogVisible}
+        onConfirm={deleteHandler}
+        onDismiss={() => setDeleteDialogVisible(false)}>
+        <Text>
+          Are you sure you want to delete <Text style={{ fontWeight: 'bold' }}>{subject.name}</Text>
+          ?
+        </Text>
+      </ConfirmationDialog>
     </Screen>
   )
 }
@@ -110,8 +102,5 @@ const styles = StyleSheet.create({
   },
   dialog: {
     alignSelf: 'center',
-  },
-  actions: {
-    justifyContent: 'space-between',
   },
 })

@@ -38,6 +38,7 @@ const TimePicker: FC<Props> = ({
           mode="time"
           onChange={onDateChange}
           textColor="red"
+          timeZoneOffsetInMinutes={0}
         />
       )}
     </>

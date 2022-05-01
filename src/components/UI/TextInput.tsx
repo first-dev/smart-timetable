@@ -1,6 +1,7 @@
 import fonts from '@constants/fonts'
 import spacing from '@constants/spacing'
 import { MaterialIcons } from '@expo/vector-icons'
+import { paperTheme } from '@utils/theme'
 import { ComponentProps, FC } from 'react'
 import { Platform, StyleSheet, TextInput as NativeTextInput, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: fonts.sizes.regular,
+    fontFamily: paperTheme.fonts.regular.fontFamily,
     height: '100%',
   },
   icon: {

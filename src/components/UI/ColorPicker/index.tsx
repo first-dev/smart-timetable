@@ -1,5 +1,5 @@
 import spacing from '@constants/spacing'
-import { uniq, sortBy } from 'lodash'
+import { sortBy, uniq } from 'lodash'
 import { FC, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -123,11 +123,11 @@ const ColorPicker: FC<Props> = ({
             </ScrollView>
           </Dialog.ScrollArea>
           <Dialog.Actions style={styles.action}>
-            <Button contentStyle={styles.actionButton} onPress={dismissHandler}>
-              Cancel
-            </Button>
             <Button contentStyle={styles.actionButton} onPress={submitHandler}>
               Ok
+            </Button>
+            <Button contentStyle={styles.actionButton} onPress={dismissHandler}>
+              Cancel
             </Button>
           </Dialog.Actions>
         </Dialog>

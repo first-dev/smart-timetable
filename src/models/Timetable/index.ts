@@ -2,10 +2,12 @@ import Day from './Day'
 import Session from './Session'
 
 interface StaticTimetable {
+  title: string
   id: string
   days: Day<'static'>[]
 }
 interface DynamicTimetable {
+  title: string
   id: string
   sessions: Session<'dynamic'>[]
 }

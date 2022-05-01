@@ -1,10 +1,12 @@
 interface StaticSession {
+  id: string | number[]
   subjectId: string
   start: number
   end: number
   highlighted: boolean
 }
 interface DynamicSession {
+  id: string | number[]
   subjectId: string
   dayIndex: number
   start: number

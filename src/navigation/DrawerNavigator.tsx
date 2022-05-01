@@ -10,6 +10,7 @@ import {
   SubjectsScreen,
   TimetableScreen,
 } from '@screens'
+import { paperTheme } from '@utils/theme'
 
 export type DrawerParamList = {
   OverviewScreen: undefined
@@ -37,6 +38,9 @@ const DrawerNavigator = () => {
         drawerType: width > transformThreshold ? 'permanent' : undefined,
         // headerShown: width <= transformThreshold,
         lazy: false,
+        headerTitleStyle: {
+          ...paperTheme.fonts.medium,
+        },
       }}>
       <Drawer.Screen
         name="OverviewScreen"

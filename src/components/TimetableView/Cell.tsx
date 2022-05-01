@@ -1,23 +1,25 @@
+import { PlatformTouchable } from '@components/UI'
 import { colors } from '@constants'
 import { Subject } from '@models'
 import Session from '@models/Timetable/Session'
 import { FC } from 'react'
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
-import { Colors } from 'react-native-paper'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Colors, Text } from 'react-native-paper'
 
 type CellProps = {
   style?: StyleProp<ViewStyle>
   session: Session<'static'>
   subjects: Subject[]
   highlighted?: boolean
-  onClick?: () => void
+  onPress?: (sessionId: Session<'static'>['id']) => void
 }
 
 const Cell: FC<CellProps> = ({
-  session: { start, end, subjectId },
+  session: { start, end, subjectId, id },
   subjects,
   style,
   highlighted,
+  onPress,
 }) => {
   const { name, color } = subjects.find(({ id }) => id === subjectId) ?? {
     name: '',
@@ -25,14 +27,17 @@ const Cell: FC<CellProps> = ({
   }
   return (
     <View style={[styles.container, { height: `${((end - start) / 24) * 100}%` }, style]}>
-      <View
+      <PlatformTouchable
         style={[
-          styles.inner,
+          styles.touchable,
           { backgroundColor: color },
           highlighted ? styles.highlighted : undefined,
-        ]}>
-        <Text style={styles.text}>{name}</Text>
-      </View>
+        ]}
+        onPress={() => onPress?.(id)}>
+        <View style={styles.inner}>
+          <Text style={styles.text}>{name}</Text>
+        </View>
+      </PlatformTouchable>
     </View>
   )
 }
@@ -40,11 +45,14 @@ export default Cell
 const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
+    padding: 2,
   },
   inner: {
     flex: 1,
+  },
+  touchable: {
+    height: '100%',
     padding: 6,
-    margin: 2,
     borderRadius: 4,
   },
   text: {

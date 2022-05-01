@@ -1,7 +1,7 @@
 import { colors } from '@constants'
 import { FC } from 'react'
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
-import { Colors } from 'react-native-paper'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Colors, Text } from 'react-native-paper'
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const
 

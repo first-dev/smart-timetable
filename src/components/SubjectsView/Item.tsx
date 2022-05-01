@@ -1,7 +1,8 @@
 import PlatformTouchable from '@components/UI/PlatformTouchable'
 import { Subject } from '@models'
 import { FC } from 'react'
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { Text } from 'react-native-paper'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 type SubjectProps = {
   style?: StyleProp<ViewStyle>

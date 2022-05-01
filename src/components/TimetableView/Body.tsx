@@ -1,6 +1,6 @@
 import { Subject } from '@models'
-import { Day } from '@models/Timetable'
-import { FC } from 'react'
+import { Day, Session } from '@models/Timetable'
+import { FC, Fragment } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Column from './Column'
 import Grid from './Grid'
@@ -8,15 +8,20 @@ import Grid from './Grid'
 type Props = {
   days?: Day<'static'>[]
   subjects: Subject[]
+  onPress?: (sessionId: Session<'static'>['id']) => void
+  start?: number
+  end?: number
 }
 
-const Body: FC<Props> = ({ days, subjects }) => {
+const Body: FC<Props> = ({ days, subjects, onPress, start = 0, end = 6 }) => {
   return (
     <View style={styles.container}>
       <Grid style={styles.float} columns={days?.length ?? 6} rows={24} halves />
       <View style={[styles.float, styles.columnsContainer]}>
         {days?.map((day, i) => (
-          <Column day={day} key={i} subjects={subjects} />
+          <Fragment key={i}>
+            {start <= i && i <= end && <Column day={day} subjects={subjects} onPress={onPress} />}
+          </Fragment>
         ))}
       </View>
     </View>

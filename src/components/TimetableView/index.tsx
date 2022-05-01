@@ -1,6 +1,6 @@
 import { useDynamicWindowStyles } from '@hooks'
 import { Subject } from '@models'
-import { Timetable } from '@models/Timetable'
+import { Session, Timetable } from '@models/Timetable'
 import { FC } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import Body from './Body'
@@ -10,11 +10,12 @@ import Sidebar from './Sidebar'
 type Props = {
   timetable?: Timetable<'static'>
   subjects: Subject[]
+  onSessionPress?: (sessionId: Session<'static'>['id']) => void
 }
 
-const TimetableView: FC<Props> = ({ timetable, subjects }) => {
-  const { scrollContainerStyle: dynamicHeight } = useDynamicWindowStyles(window => ({
-    scrollContainerStyle: {
+const TimetableView: FC<Props> = ({ timetable, subjects, onSessionPress }) => {
+  const { dynamicHeight } = useDynamicWindowStyles(window => ({
+    dynamicHeight: {
       height: window.height > 300 ? window.height * 2 : 600,
     },
   }))
@@ -26,7 +27,7 @@ const TimetableView: FC<Props> = ({ timetable, subjects }) => {
         style={styles.scroll}
         contentContainerStyle={[dynamicHeight, styles.scrollContainer]}>
         <Sidebar start={1} end={23} AmPm style={styles.sidebar} />
-        <Body days={timetable?.days} subjects={subjects} />
+        <Body days={timetable?.days} subjects={subjects} onPress={onSessionPress} />
       </ScrollView>
     </View>
   )

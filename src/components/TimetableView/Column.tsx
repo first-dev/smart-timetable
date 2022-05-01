@@ -1,4 +1,5 @@
 import { Subject } from '@models'
+import { Session } from '@models/Timetable'
 import Day from '@models/Timetable/Day'
 import { FC, Fragment } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
@@ -9,9 +10,10 @@ type ColumnProps = {
   style?: StyleProp<ViewStyle>
   day: Day<'static'>
   subjects: Subject[]
+  onPress?: (sessionId: Session<'static'>['id']) => void
 }
 
-const Column: FC<ColumnProps> = ({ style, day, subjects }) => {
+const Column: FC<ColumnProps> = ({ style, day, subjects, onPress }) => {
   day.sessions.sort((a, b) => a.start - b.start)
   return (
     <View style={[styles.container, style]}>
@@ -20,7 +22,12 @@ const Column: FC<ColumnProps> = ({ style, day, subjects }) => {
         return (
           <Fragment key={i}>
             {i == 0 && session.start != 0 && <EmptyCell gap={session.start} />}
-            <Cell session={session} subjects={subjects} highlighted={session.highlighted} />
+            <Cell
+              session={session}
+              subjects={subjects}
+              highlighted={session.highlighted}
+              onPress={onPress}
+            />
             {gap > 0 && <EmptyCell gap={gap} />}
           </Fragment>
         )

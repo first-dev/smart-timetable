@@ -2,7 +2,8 @@ import { colors } from '@constants'
 import { format } from 'date-fns'
 import { range } from 'lodash'
 import { FC } from 'react'
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Text } from 'react-native-paper'
 
 type Props = {
   style?: StyleProp<ViewStyle>

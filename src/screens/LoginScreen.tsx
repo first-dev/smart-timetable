@@ -2,7 +2,7 @@ import { Screen } from '@components/UI'
 import { MainStackParamList } from '@navigation/MainNavigator'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { FC } from 'react'
-import { Text } from 'react-native'
+import { Text } from 'react-native-paper'
 
 type Props = NativeStackScreenProps<MainStackParamList, 'LoginScreen'>
 

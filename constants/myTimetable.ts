@@ -1,13 +1,16 @@
 import { Subject } from '@models'
 import { Timetable } from '@models/Timetable'
+import uuid from 'react-native-uuid'
 import { Colors } from 'react-native-paper'
 
 export const emptyTimetable: Timetable<'dynamic'> = {
+  title: '',
   id: 'S2',
   sessions: [],
 }
 
 export const myTimetable: Timetable<'dynamic'> = {
+  title: 'Second semester',
   id: 'S2',
   sessions: [
     {
@@ -30,15 +33,16 @@ export const myTimetable: Timetable<'dynamic'> = {
         end: null,
       },
     },
-  ],
+  ].map(session => ({ ...session, id: uuid.v4() })),
 }
 
 export const myTimetable2: Timetable<'dynamic'> = {
+  title: 'First semester',
   id: 'S1',
   sessions: [
     {
       dayIndex: 1,
-      subjectId: 'M10',
+      subjectId: 'M16-1',
       start: 8.5,
       end: 10.5,
       shelfLife: {
@@ -48,7 +52,7 @@ export const myTimetable2: Timetable<'dynamic'> = {
     },
     {
       dayIndex: 1,
-      subjectId: 'M8',
+      subjectId: 'M16-2',
       start: 14.5,
       end: 16.5,
       shelfLife: {
@@ -56,7 +60,7 @@ export const myTimetable2: Timetable<'dynamic'> = {
         end: null,
       },
     },
-  ],
+  ].map(session => ({ ...session, id: uuid.v4() })),
 }
 
 export const mySubjects: Subject[] = [

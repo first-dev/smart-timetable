@@ -50,7 +50,6 @@ const SubjectPicker: FC<Props> = ({
                     key={i}
                     label={name}
                     value={id}
-                    position="leading"
                     labelStyle={{ textAlign: undefined }}
                     style={{ backgroundColor: undefined, marginHorizontal: 0 }}
                   />

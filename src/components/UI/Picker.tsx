@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-unused-styles */
 import Icon from '@components/UI/Icon'
-import { colors, fonts, spacing } from '@constants'
-import { ComponentProps, ReactNode } from 'react'
+import { fonts, spacing } from '@constants'
+import { ComponentProps, ReactNode, useMemo } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { gestureHandlerRootHOC, TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { Text, useTheme } from 'react-native-paper'
@@ -15,6 +16,10 @@ export type PickerProps<T = string> = {
   icon?: ReactNode
   error?: boolean
   onChange?: (newValue: string) => void
+  contentAlignment?: 'vertical' | 'horizontal'
+  valueStyle?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<ViewStyle>
+  title?: string
 } & ComponentProps<typeof TouchableNativeFeedback>
 
 const Picker = ({
@@ -25,58 +30,72 @@ const Picker = ({
   icon,
   error,
   valueComponent,
+  contentAlignment = 'horizontal',
+  valueStyle,
+  labelStyle,
   ...rest
 }: PickerProps<string> & { children?: ReactNode }) => {
-  const {
-    colors: { placeholder: placeholderColor },
-  } = useTheme()
+  const { colors } = useTheme()
+  const isHor = contentAlignment === 'horizontal'
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          paddingVertical: spacing.xl,
+          paddingHorizontal: spacing.l,
+          flexDirection: 'row',
+          alignItems: 'center',
+          flexShrink: 1,
+        },
+        iconContainer: {
+          paddingRight: spacing.l,
+        },
+        contentContainer: {
+          flexDirection: isHor ? 'row' : 'column',
+          flex: 1,
+        },
+        labelContainer: {
+          width: isHor ? 60 : undefined,
+          marginRight: spacing.l,
+        },
+        label: {
+          fontSize: fonts.sizes.regular,
+          lineHeight: fonts.sizes.regular + 2,
+        },
+        value: {
+          flexShrink: 1,
+          fontSize: fonts.sizes.regular,
+          lineHeight: fonts.sizes.regular + 2,
+          color: colors.accent,
+        },
+      }),
+    [colors.accent, isHor],
+  )
   return (
     <PlatformTouchable style={[styles.container, style]} {...rest}>
       <View style={styles.iconContainer}>{icon}</View>
-      {label && (
-        <View style={styles.labelContainer}>
-          <Text style={styles.label}>{label}</Text>
-        </View>
-      )}
-      <View style={styles.valueContainer}>
-        {valueComponent ? (
-          valueComponent
-        ) : (
-          <Text style={styles.value}>
-            {value ?? <Text style={{ color: placeholderColor }}>{placeholder}</Text>}
-          </Text>
+      <View style={styles.contentContainer}>
+        {label && (
+          <View style={styles.labelContainer}>
+            <Text style={[styles.label, labelStyle]} numberOfLines={1}>
+              {label}
+            </Text>
+          </View>
         )}
+        <View>
+          {valueComponent ? (
+            valueComponent
+          ) : value ? (
+            <Text style={[styles.value, valueStyle]}>{value}</Text>
+          ) : isHor ? (
+            <Text style={[styles.value, { color: colors.placeholder }]}>{placeholder}</Text>
+          ) : null}
+        </View>
       </View>
-      <View style={styles.errorContainer}>
+      <View>
         {error && <Icon pack="MaterialCommunityIcons" icon="close-circle" color={colors.error} />}
       </View>
     </PlatformTouchable>
   )
 }
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: spacing.l,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexShrink: 1,
-  },
-  iconContainer: {
-    paddingRight: spacing.l,
-    paddingVertical: spacing.xl,
-  },
-  labelContainer: {
-    width: 60,
-  },
-  label: {
-    fontSize: fonts.sizes.regular,
-  },
-  valueContainer: {
-    flex: 1,
-  },
-  value: {
-    flexShrink: 1,
-    fontSize: fonts.sizes.regular,
-  },
-  errorContainer: {},
-})
 export default gestureHandlerRootHOC(Picker, { flex: undefined })

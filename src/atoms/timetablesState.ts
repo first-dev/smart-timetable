@@ -15,5 +15,5 @@ export const timetablesAtom = atom<TimetablesStateType>({
     active: 'S2',
     timetables: [myTimetable, myTimetable2],
   },
-  effects: [persistAtom('timetablesState', parseTimetableState)],
+  effects: [persistAtom('timetablesState', { parse: parseTimetableState })],
 })

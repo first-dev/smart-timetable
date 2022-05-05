@@ -1,4 +1,4 @@
-import { useDynamicWindowStyles } from '@hooks'
+import { useDynamicWindowStyles, useSettings } from '@hooks'
 import { Subject } from '@models'
 import { Session, Timetable } from '@models/Timetable'
 import { FC } from 'react'
@@ -14,6 +14,9 @@ type Props = {
 }
 
 const TimetableView: FC<Props> = ({ timetable, subjects, onSessionPress }) => {
+  const { settings } = useSettings()
+  const start = parseInt(settings.timetable.firstDayIndex)
+  const end = parseInt(settings.timetable.lastDayIndex)
   const { dynamicHeight } = useDynamicWindowStyles(window => ({
     dynamicHeight: {
       height: window.height > 300 ? window.height * 2 : 600,
@@ -22,12 +25,18 @@ const TimetableView: FC<Props> = ({ timetable, subjects, onSessionPress }) => {
   const highlightedDay = timetable?.days.find(({ highlighted }) => highlighted)?.index
   return (
     <View style={styles.container}>
-      <Header start={1} end={5} style={styles.header} highlightedDay={highlightedDay} />
+      <Header start={start} end={end} style={styles.header} highlightedDay={highlightedDay} />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={[dynamicHeight, styles.scrollContainer]}>
         <Sidebar start={1} end={23} AmPm style={styles.sidebar} />
-        <Body days={timetable?.days} subjects={subjects} onPress={onSessionPress} />
+        <Body
+          days={timetable?.days}
+          subjects={subjects}
+          onPress={onSessionPress}
+          start={start}
+          end={end}
+        />
       </ScrollView>
     </View>
   )

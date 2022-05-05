@@ -5,7 +5,7 @@ import { range } from 'lodash'
 export const compile = ({ title, id, sessions }: Timetable<'dynamic'>): Timetable<'static'> => ({
   title,
   id,
-  days: range(1, 6).map(i =>
+  days: range(0, 7).map(i =>
     compileDay({ index: i, sessions: sessions.filter(({ dayIndex }) => dayIndex === i) }),
   ),
 })

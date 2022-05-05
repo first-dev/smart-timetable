@@ -14,9 +14,10 @@ type Props = {
 }
 
 const Body: FC<Props> = ({ days, subjects, onPress, start = 0, end = 6 }) => {
+  console.log(days)
   return (
     <View style={styles.container}>
-      <Grid style={styles.float} columns={days?.length ?? 6} rows={24} halves />
+      <Grid style={styles.float} columns={end - start + 1} rows={24} halves />
       <View style={[styles.float, styles.columnsContainer]}>
         {days?.map((day, i) => (
           <Fragment key={i}>

@@ -13,6 +13,17 @@
       "releaseChannel": "default",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "APP_VARIANT": "development"
+      }
+    },
+    "preview": {
+      "extends": "base",
+      "distribution": "internal",
+      "releaseChannel": "preview",
+      "android": {
+        "buildType": "apk"
       }
     },
     "production": {
@@ -20,7 +31,7 @@
       "distribution": "store",
       "releaseChannel": "stable",
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "apk"
       }
     }
   }

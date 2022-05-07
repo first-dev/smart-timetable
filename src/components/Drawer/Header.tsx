@@ -1,12 +1,18 @@
-import { colors } from '@constants'
 import { FC } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Title } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 
 const Header: FC = () => {
+  const { colors } = useTheme()
   return (
     <View style={styles.container}>
-      <Title style={styles.text}>Smart Timetable</Title>
+      <Text
+        style={{
+          color: colors.primary,
+          fontSize: 24,
+        }}>
+        Smart Timetable
+      </Text>
     </View>
   )
 }
@@ -17,9 +23,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     padding: 20,
-  },
-  text: {
-    flex: 1,
-    color: colors.primary,
   },
 })

@@ -1,8 +1,9 @@
 import PlatformTouchable from '@components/UI/PlatformTouchable'
+import spacing from '@constants/spacing'
 import { Subject } from '@models'
 import { FC } from 'react'
-import { Text } from 'react-native-paper'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Card, Text } from 'react-native-paper'
 
 type SubjectProps = {
   style?: StyleProp<ViewStyle>
@@ -13,16 +14,18 @@ type SubjectProps = {
 const Item: FC<SubjectProps> = ({ subject: { name, color }, style, onPress }) => {
   return (
     <View style={[styles.container, style]}>
-      <PlatformTouchable onPress={onPress}>
-        <View style={styles.inner}>
-          <View style={[styles.header, { backgroundColor: color }]}>
-            <Text style={styles.text} numberOfLines={2}>
-              {name}
-            </Text>
-          </View>
-          <View style={styles.body}></View>
-        </View>
-      </PlatformTouchable>
+      <Card elevation={4} style={styles.card}>
+        <Card.Content style={styles.card}>
+          <PlatformTouchable style={styles.touchable} onPress={onPress}>
+            <View style={[styles.color, { backgroundColor: color }]} />
+            <View style={styles.body}>
+              <Text style={styles.text} numberOfLines={2}>
+                {name}
+              </Text>
+            </View>
+          </PlatformTouchable>
+        </Card.Content>
+      </Card>
     </View>
   )
 }
@@ -32,23 +35,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
   },
-  inner: {
-    flex: 1,
-    alignItems: 'stretch',
-    margin: 2,
-    borderRadius: 4,
+  card: {
+    paddingHorizontal: 0,
+    paddingVertical: 0,
     overflow: 'hidden',
   },
-  header: {
+  touchable: {
+    flexDirection: 'row',
     alignItems: 'center',
-    padding: 4,
-    height: 50,
+    padding: spacing.l,
   },
-  text: {
-    color: 'white',
+  color: {
+    width: 40,
+    aspectRatio: 1,
+    borderRadius: 20,
+    marginRight: spacing.xl,
   },
   body: {
-    height: 100,
-    backgroundColor: 'grey',
+    flex: 1,
   },
+  text: {},
 })

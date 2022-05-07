@@ -48,7 +48,9 @@ const Picker = ({
           flexShrink: 1,
         },
         iconContainer: {
-          paddingRight: spacing.l,
+          marginRight: spacing.l,
+          width: 24,
+          aspectRatio: 1,
         },
         contentContainer: {
           flexDirection: isHor ? 'row' : 'column',

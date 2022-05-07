@@ -1,10 +1,7 @@
-// import { IconButton } from '@components/UI'
-import fonts from '@constants/fonts'
-import spacing from '@constants/spacing'
+import { fonts, spacing } from '@constants'
 import { FC } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
-import { RadioButton, Text, IconButton } from 'react-native-paper'
+import { IconButton, RadioButton, Text } from 'react-native-paper'
 
 type Props = {
   style?: StyleProp<ViewStyle>
@@ -28,7 +25,7 @@ const Item: FC<Props> = ({ style, onDelete, onEdit, onSelect, title, selected })
     </View>
   )
 }
-export default gestureHandlerRootHOC(Item, { flex: 0 })
+export default Item
 const styles = StyleSheet.create({
   container: {
     padding: spacing.l,

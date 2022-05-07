@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    color: colors.text,
   },
   highlighted: {
     color: colors.highlight,

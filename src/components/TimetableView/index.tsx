@@ -1,4 +1,4 @@
-import { useDynamicWindowStyles, useSettings } from '@hooks'
+import { useDynamicWindowStyles, useLayoutEvent, useSettings } from '@hooks'
 import { Subject } from '@models'
 import { Session, Timetable } from '@models/Timetable'
 import { FC } from 'react'
@@ -6,6 +6,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import Body from './Body'
 import Header from './Header'
 import Sidebar from './Sidebar'
+import TimeIndicator from './TimeIndicator'
 
 type Props = {
   timetable?: Timetable<'static'>
@@ -23,20 +24,42 @@ const TimetableView: FC<Props> = ({ timetable, subjects, onSessionPress }) => {
     },
   }))
   const highlightedDay = timetable?.days.find(({ highlighted }) => highlighted)?.index
+  const sidebarLayout = useLayoutEvent()
+  const bodyLayout = useLayoutEvent()
+  const containerLayout = useLayoutEvent()
+
   return (
-    <View style={styles.container}>
-      <Header start={start} end={end} style={styles.header} highlightedDay={highlightedDay} />
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={[dynamicHeight, styles.scrollContainer]}>
-        <Sidebar start={1} end={23} AmPm style={styles.sidebar} />
-        <Body
-          days={timetable?.days}
-          subjects={subjects}
-          onPress={onSessionPress}
-          start={start}
-          end={end}
-        />
+    <View style={styles.container} onLayout={containerLayout.onLayout}>
+      <Header
+        start={start}
+        end={end}
+        style={{
+          paddingLeft: sidebarLayout.event?.width ?? 20,
+          // align with the scroll bar
+          paddingRight:
+            (containerLayout.event?.width ?? 0) -
+            ((sidebarLayout.event?.width ?? 0) + (bodyLayout.event?.width ?? 0)),
+        }}
+        highlightedDay={highlightedDay}
+      />
+      <ScrollView style={styles.scroll} contentContainerStyle={dynamicHeight}>
+        <View style={[styles.bodyContainer, styles.float]}>
+          <Sidebar
+            start={1}
+            end={23}
+            AmPm={settings.general.hourFormat === '12-hour'}
+            onLayout={sidebarLayout.onLayout}
+          />
+          <Body
+            days={timetable?.days}
+            subjects={subjects}
+            onPress={onSessionPress}
+            start={start}
+            end={end}
+            onLayout={bodyLayout.onLayout}
+          />
+        </View>
+        <TimeIndicator style={styles.float} />
       </ScrollView>
     </View>
   )
@@ -49,13 +72,14 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
   },
-  scrollContainer: {
+  bodyContainer: {
     flexDirection: 'row',
   },
-  header: {
-    paddingLeft: 40,
-  },
-  sidebar: {
-    width: 40,
+  float: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   },
 })

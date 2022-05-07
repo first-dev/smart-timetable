@@ -5,10 +5,12 @@ import { deleteSessionFromTimetable, editSessionInTimetable } from '@utils/timet
 import { cloneDeep } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useRecoilState, useResetRecoilState } from 'recoil'
+import useRealTime from './useRealTime'
 
 const useTimetablesState = () => {
   const [timetablesState, setTimetablesState] = useRecoilState(timetablesAtom)
   const resetTimetablesState = useResetRecoilState(timetablesAtom)
+  const time = useRealTime(60 * 1000).getMinutes()
   const { timetables, active: activeTimetableId } = timetablesState
   const activeTimetable = useMemo(
     () => timetablesState.timetables.find(({ id }) => id === timetablesState.active),
@@ -16,7 +18,8 @@ const useTimetablesState = () => {
   )
   const activeStaticTimetable = useMemo(
     () => (activeTimetable ? compile(activeTimetable) : undefined),
-    [activeTimetable],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeTimetable, time],
   )
   const addTimetable = useCallback(
     (timetableToAdd: Timetable<'dynamic'>) => {
@@ -89,24 +92,6 @@ const useTimetablesState = () => {
       activeTimetable?.sessions.find(session => session.id === sessionId),
     [activeTimetable?.sessions],
   )
-  // const editTimetable = useCallback(
-  //   (
-  //     id: string,
-  //     timetableOrUpdater:
-  //       | Timetable<'dynamic'>
-  //       | ((oldTimetable: Timetable<'dynamic'>) => Timetable<'dynamic'> | void),
-  //     fallback: () => void,
-  //   ) => {
-  //     setTimetablesState(oldState => {
-  //       const stateCopy = cloneDeep(oldState)
-  //       stateCopy.timetables.forEach(timetable => {
-  //         if (timetable.id === id) timetable.title = title
-  //       })
-  //       return stateCopy
-  //     })
-  //   },
-  //   [setTimetablesState],
-  // )
   const deleteSession = useCallback(
     (sessionId: Session<'dynamic'>['id']) =>
       setTimetablesState(oldState => {

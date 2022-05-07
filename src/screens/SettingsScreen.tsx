@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-unused-styles */
-import { DayPicker, Icon, RadioPicker, Screen } from '@components/UI'
+import { DayPicker, Icon, RadioPicker, Screen, WideButton } from '@components/UI'
 import spacing from '@constants/spacing'
 import { useSettings } from '@hooks'
-import { DrawerParamList } from '@navigation/DrawerNavigator'
+import { AllParamsList } from '@navigation'
 import { DrawerScreenProps } from '@react-navigation/drawer'
 import { FC, useMemo } from 'react'
 import { StyleSheet } from 'react-native'
 import { Button, Divider, Text, useTheme } from 'react-native-paper'
 
-type Props = DrawerScreenProps<DrawerParamList, 'SettingsScreen'>
+type Props = DrawerScreenProps<AllParamsList, 'SettingsScreen'>
 
-const SettingsScreen: FC<Props> = () => {
+const SettingsScreen: FC<Props> = ({ navigation: { navigate } }) => {
   const { colors } = useTheme()
   const styles = useMemo(
     () =>
@@ -18,7 +18,10 @@ const SettingsScreen: FC<Props> = () => {
         title: {
           color: colors.primary,
           marginHorizontal: spacing.l,
-          marginVertical: spacing.s,
+          marginVertical: spacing.m,
+        },
+        picker: {
+          paddingVertical: spacing.m,
         },
       }),
     [colors.primary],
@@ -28,6 +31,7 @@ const SettingsScreen: FC<Props> = () => {
     <Screen scrollable>
       <Text style={styles.title}>General</Text>
       <RadioPicker
+        style={styles.picker}
         label="App theme"
         title="App theme"
         contentAlignment="vertical"
@@ -40,8 +44,23 @@ const SettingsScreen: FC<Props> = () => {
         <RadioPicker.Item label="Light" value="Light" />
         <RadioPicker.Item label="Dark" value="Dark" />
       </RadioPicker>
+      <Divider />
+      <RadioPicker
+        style={styles.picker}
+        label="Hour format"
+        title="Hour format"
+        contentAlignment="vertical"
+        onChange={newValue =>
+          updateSettings(oldSettings => (oldSettings.general.hourFormat = newValue as any))
+        }
+        icon={<Icon pack="MaterialCommunityIcons" icon="hours-24" />}
+        value={settings.general.hourFormat}>
+        <RadioPicker.Item label="24-hour" value="24-hour" />
+        <RadioPicker.Item label="12-hour" value="12-hour" />
+      </RadioPicker>
       <Text style={styles.title}>Timetable</Text>
       <DayPicker
+        style={styles.picker}
         label="First week day"
         title="First week day"
         value={settings.timetable.firstDayIndex}
@@ -54,6 +73,7 @@ const SettingsScreen: FC<Props> = () => {
       />
       <Divider />
       <DayPicker
+        style={styles.picker}
         label="Last week day"
         title="First week day"
         value={settings.timetable.lastDayIndex.toString()}
@@ -70,8 +90,16 @@ const SettingsScreen: FC<Props> = () => {
           />
         }
       />
+      <Divider />
+      <WideButton
+        title="Manage timetables"
+        style={styles.picker}
+        icon={<Icon pack="MaterialCommunityIcons" icon="table-settings" />}
+        onPress={() => navigate('ManageTimetablesScreen')}
+      />
       <Text style={styles.title}>Subjects</Text>
       <RadioPicker
+        style={styles.picker}
         label="Dumb picker"
         title="Opp"
         contentAlignment="vertical"
@@ -80,6 +108,7 @@ const SettingsScreen: FC<Props> = () => {
       />
       <Text style={styles.title}>Calendar</Text>
       <RadioPicker
+        style={styles.picker}
         label="Dumb picker"
         title="Opp"
         contentAlignment="vertical"

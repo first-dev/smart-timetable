@@ -27,7 +27,7 @@ if (__DEV__) {
   //@ts-ignore
   import('react-native-console-time-polyfill')
 }
-LogBox.ignoreLogs(['timer'])
+LogBox.ignoreLogs(['timer', 'The native module for Flipper seems unavailable.'])
 
 const Providers: FC = ({ children }) => {
   const navigationRef = useNavigationContainerRef()

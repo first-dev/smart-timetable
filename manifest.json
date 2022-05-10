@@ -2,8 +2,8 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "lang": "en",
-  "name": "SmartTimetable",
-  "short_name": "SmartTimetable",
+  "name": "Smart Timetable",
+  "short_name": "Smart Timetable",
   "start_url": "/?utm_source=web_app_manifest",
   "related_applications": [
     {

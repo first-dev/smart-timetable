@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/smart-timetable/static/js/app.61eefa0d.chunk.js",
-    "app.js.map": "/smart-timetable/static/js/app.61eefa0d.chunk.js.map",
+    "app.js": "/smart-timetable/static/js/app.d77a212f.chunk.js",
+    "app.js.map": "/smart-timetable/static/js/app.d77a212f.chunk.js.map",
     "runtime~app.js": "/smart-timetable/static/js/runtime~app.2f291264.js",
     "runtime~app.js.map": "/smart-timetable/static/js/runtime~app.2f291264.js.map",
-    "static/js/2.9b2ea5db.chunk.js": "/smart-timetable/static/js/2.9b2ea5db.chunk.js",
-    "static/js/2.9b2ea5db.chunk.js.map": "/smart-timetable/static/js/2.9b2ea5db.chunk.js.map",
+    "static/js/2.4bb69f3e.chunk.js": "/smart-timetable/static/js/2.4bb69f3e.chunk.js",
+    "static/js/2.4bb69f3e.chunk.js.map": "/smart-timetable/static/js/2.4bb69f3e.chunk.js.map",
     "fonts/AntDesign.ttf": "/smart-timetable/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/smart-timetable/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/smart-timetable/./fonts/Feather.ttf",
@@ -42,11 +42,11 @@
     "index.html": "/smart-timetable/index.html",
     "manifest.json": "/smart-timetable/manifest.json",
     "serve.json": "/smart-timetable/serve.json",
-    "static/js/2.9b2ea5db.chunk.js.LICENSE.txt": "/smart-timetable/static/js/2.9b2ea5db.chunk.js.LICENSE.txt"
+    "static/js/2.4bb69f3e.chunk.js.LICENSE.txt": "/smart-timetable/static/js/2.4bb69f3e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.2f291264.js",
-    "static/js/2.9b2ea5db.chunk.js",
-    "static/js/app.61eefa0d.chunk.js"
+    "static/js/2.4bb69f3e.chunk.js",
+    "static/js/app.d77a212f.chunk.js"
   ]
 }
